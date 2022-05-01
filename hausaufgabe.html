@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>REST Client Testpage</title>
+  </head>
+  <body>
+    <h1>Authors</h1>
+    <ul id="authors"></ul>
+
+    <h1>POST Beispiel</h1>
+    <div id="post"></div>
+
+    <script>
+      function createNode(element) {
+        return document.createElement(element);
+      }
+
+      function append(parent, el) {
+        return parent.appendChild(el);
+      }
+
+      const ul = document.getElementById("authors");
+
+      const url = "https://type.fit/api/quotes";
+
+      fetch(url)
+        .then((resp) => resp.json())
+        .then(function (data) {
+          let quotes_obj = data[8];
+          console.log(quotes_obj);
+          let li = createNode("li");
+          let span = createNode("span");
+          span.innerHTML = `${quotes_obj.text} ${quotes_obj.author}`;
+          append(li, span);
+          append(ul, li);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+</script>
+
+
+
+<script>
+
+      const ul2 = document.getElementById("authors");
+
+      const url2 = "https://theaudiodb.com/api/v1/json/2/search.php?s=coldplay";
+
+      fetch(url2)
+        .then((resp) => resp.json())
+        .then(function (data) {
+          let artist = data.artists;
+          console.log(artist);
+          let li = createNode("li");
+          let span = createNode("span");
+          span.innerHTML = `Genre: ${artist[0].strGenre}; Stil: ${artist[0].strStyle}`;
+          append(li, span);
+          append(ul2, li);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+	</script>
+
+
+	/*
+
+<script>
+	const element = document.getElementById('post');
+	const requestOptions = {
+		method: 'POST',
+		mode: 'cors',
+		header: { 'Content-Type': 'application/json' },
+        body: {"INPUT": "hello world"}
+	};
+	fetch('HTTP://API.SHOUTCLOUD.IO/V1/SHOUT', requestOptions)
+		.then(response => response.json())
+		.then(data => element.innerHTML = data.id );
+</script>
+
+  */
+
+
+  </body>
+</html>
