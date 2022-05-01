@@ -5,9 +5,12 @@
     <title>REST Client Testpage</title>
   </head>
   <body>
-    <h1>Authors</h1>
-    <ul id="authors"></ul>
-
+    <h1>Musik</h1>
+    <ul id="musicians"></ul>
+    <h1>Quote</h1>
+        <ul id="quote"></ul>
+    <h1>Chuck Norris Witz</h1>
+    <ul id="chuck"></ul>
     <h1>POST Beispiel</h1>
     <div id="post"></div>
 
@@ -20,7 +23,7 @@
         return parent.appendChild(el);
       }
 
-      const ul = document.getElementById("authors");
+      const ul = document.getElementById("quote");
 
       const url = "https://type.fit/api/quotes";
 
@@ -45,7 +48,7 @@
 
 <script>
 
-      const ul2 = document.getElementById("authors");
+      const ul2 = document.getElementById("musicians");
 
       const url2 = "https://theaudiodb.com/api/v1/json/2/search.php?s=coldplay";
 
@@ -66,22 +69,52 @@
 	</script>
 
 
+
+
+    <script>
+
+      const ul3 = document.getElementById("chuck");
+
+      const url3 = "https://api.chucknorris.io/jokes/random";
+
+      fetch(url3)
+        .then((resp) => resp.json())
+        .then(function (data) {
+          let joke = data;
+          console.log(joke);
+          let li = createNode("li");
+          let span = createNode("span");
+          span.innerHTML = `WITZ: ${joke.value};`;
+          append(li, span);
+          append(ul3, li);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+	</script>
+
+
+    <script>
+
 	/*
+    Versuch des Aufrus einer Post-API (bis jetzt noch nicht erfolgreich)
 
-<script>
-	const element = document.getElementById('post');
-	const requestOptions = {
-		method: 'POST',
-		mode: 'cors',
-		header: { 'Content-Type': 'application/json' },
-        body: {"INPUT": "hello world"}
-	};
-	fetch('HTTP://API.SHOUTCLOUD.IO/V1/SHOUT', requestOptions)
-		.then(response => response.json())
-		.then(data => element.innerHTML = data.id );
-</script>
+    const element = document.getElementById('post');
+    const requestOptions = {
+            method: 'POST',
+            mode: 'cors',
+            header: { 'Content-Type': 'application/json' },
+            body: {"INPUT": "hello world"}
+        };
+    fetch('HTTP://API.SHOUTCLOUD.IO/V1/SHOUT', requestOptions)
+            .then(response => response.json())
+            .then(data => element.innerHTML = data.id );
 
-  */
+    */
+
+    </script>
+
+
 
 
   </body>
