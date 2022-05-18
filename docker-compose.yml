@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+  frontend:
+    image: "cleancoderocker/example-frontend"
+    container_name: "example-frontend"
+    command: npm start
+    ports:
+      - 3000:3000
+    networks:
+      - public
+    depends_on:
+      - backend
+  backend:
+    image: "cleancoderocker/example-backend"
+    container_name: "example-database"
+    command: npm start
+    environment:
+      - DATABASE_DB=example
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=secret
+      - DATABASE_HOST=database
+    ports:
+      - 80:80
+      - 9229:9229
+      - 9230:9230
+    networks:
+      - public
+      - private
+    depends_on:
+        - database
+  database:
+      image: "mongodb_data"
+      container_name: "example-database"
+      restart: always
+      volumes:
+        - db_data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: example
+        MYSQL_USER: wordpress
+        MYSQL_PASSWORD: wordpress
+      networks:
+        - private
+networks:
+  public:
+  private:
+volumes:
+  db_data:
