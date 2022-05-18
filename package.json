@@ -1,0 +1,19 @@
+{
+  "name": "ss2022_wa_melodice",
+  "version": "0.0.1",
+  "description": "A midi synthesizer platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.ai.fh-erfurt.de/team-melodice/ss2022_wa_melodice.git"
+  },
+  "keywords": [
+    "synth",
+    "social-network"
+  ],
+  "author": "Team Melodice",
+  "license": "ISC"
+}

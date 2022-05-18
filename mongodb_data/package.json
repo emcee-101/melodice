@@ -1,0 +1,11 @@
+{
+  "name": "mongodb_data",
+  "version": "0.0.1",
+  "description": "MongoDB Data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Team Melodice",
+  "license": "ISC"
+}
