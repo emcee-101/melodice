@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Installieren der Abhängigkeiten
-RUN npm install
+#RUN npm install
 # Alternativ im Produktivsystem:
 # RUN npm install --production
 
