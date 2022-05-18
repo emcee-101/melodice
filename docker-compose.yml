@@ -1,18 +1,18 @@
-version: "3.7"
+version: "3.8"
 services:
   frontend:
-    image: "cleancoderocker/example-frontend"
-    container_name: "example-frontend"
+    image: "react_frontend"
+    container_name: "Team Melodice Official FRONTEND"
     command: npm start
     ports:
-      - 3000:3000
+      - 10094:10094
     networks:
       - public
     depends_on:
       - backend
   backend:
-    image: "cleancoderocker/example-backend"
-    container_name: "example-database"
+    image: "express_backend"
+    container_name: "Team Melodice Official BACKEND"
     command: npm start
     environment:
       - DATABASE_DB=example
@@ -20,9 +20,9 @@ services:
       - DATABASE_PASSWORD=secret
       - DATABASE_HOST=database
     ports:
-      - 80:80
-      - 9229:9229
-      - 9230:9230
+      - 10091:10091
+      - 10092:10092
+      - 10093:10093
     networks:
       - public
       - private
@@ -30,15 +30,15 @@ services:
         - database
   database:
       image: "mongodb_data"
-      container_name: "example-database"
+      container_name: "Team Melodice Official DATABASE IMPLEMENTATION"
       restart: always
       volumes:
-        - db_data:/var/lib/mysql
+        - db_data:mongodb_data
       environment:
-        MYSQL_ROOT_PASSWORD: secret
-        MYSQL_DATABASE: example
-        MYSQL_USER: wordpress
-        MYSQL_PASSWORD: wordpress
+        - MONGO_INITDB_ROOT_USERNAME: "root"
+        - MONGO_INITDB_ROOT_PASSWORD: "root"
+      ports:
+        - 10095:10095
       networks:
         - private
 networks:
