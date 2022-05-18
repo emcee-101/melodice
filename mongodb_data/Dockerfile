@@ -1,5 +1,5 @@
 # Definieren des Basis Docker Images
-FROM node:14
+FROM mongo:4.4.14
 
 # Erstellen des Anwendungsverzeichnisses
 WORKDIR /usr/src/app
