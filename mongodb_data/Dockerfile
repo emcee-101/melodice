@@ -1,5 +1,5 @@
 # Definieren des Basis Docker Images
-FROM mongo:4.4.14
+FROM mongo:lastest
 
 # Erstellen des Anwendungsverzeichnisses
 WORKDIR /usr/src/app
@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Installieren der Abhängigkeiten
-#RUN npm install
+RUN npm install
 # Alternativ im Produktivsystem:
 # RUN npm install --production
 
@@ -18,7 +18,7 @@ COPY . .
 
 # Freigeben des Ports, unter dem der
 # Express-Server läuft
-EXPOSE 8001
+EXPOSE 10095
 
 # Starten des definierten npm-Scripts
 CMD [ "npm", "start" ]
