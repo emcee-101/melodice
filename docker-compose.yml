@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   frontend:
-    image: react_frontend:lastest
+    build: react_frontend
     container_name: "Team Melodice Official FRONTEND"
     command: npm start
     ports:
@@ -11,7 +11,7 @@ services:
     depends_on:
       - backend
   backend:
-    image: express_backend:lastest
+    build: express_backend
     container_name: "Team Melodice Official BACKEND"
     command: npm start
     environment:
@@ -29,7 +29,7 @@ services:
     depends_on:
         - database
   database:
-      image: mongodb_data:lastest
+      build: mongodb_data
       container_name: "Team Melodice Official DATABASE IMPLEMENTATION"
       restart: always
       volumes:
