@@ -4,9 +4,9 @@ FROM mongo:4.4.14
 # Erstellen des Anwendungsverzeichnisses
 WORKDIR /usr/src/app
 
-# Freigeben des Ports, unter dem der
-# Express-Server läuft
-EXPOSE 10095
+# Freigeben des Ports, unter dem
+# MondoDb läuft
+EXPOSE 27017
 
 # Starten des definierten npm-Scripts
 # CMD [ "npm", "start" ]

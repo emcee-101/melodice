@@ -38,7 +38,7 @@ services:
         - MONGO_INITDB_ROOT_USERNAME=root
         - MONGO_INITDB_ROOT_PASSWORD=root
       ports:
-        - 10095:10095
+        - 27017:10095
       networks:
         - private
 networks:

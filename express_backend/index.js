@@ -1,11 +1,11 @@
-/*import express from 'express';
+import express from 'express';
 import { MongoClient } from 'mongodb';
 
 const app = express();
 
 async function connect() {
 
-  const client = new MongoClient('mongodb://localhost:10095');
+  const client = new MongoClient('mongodb://root:root@database:27017');
 
   await client.connect();
 
@@ -21,7 +21,8 @@ async function connect() {
 }
 
 console.log("jojo");
-console.log( connect());
-*/
+
+
+console.log(connect());
 
 console.log("can y'all hear me?");
