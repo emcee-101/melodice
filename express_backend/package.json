@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mongodb": "^4.6.0"
+    "mongodb": "^4.6.0",
+    "mongoose": "^6.3.4"
   },
   "author": "Team Melodice",
   "license": "ISC"
