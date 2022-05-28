@@ -28,10 +28,14 @@ async function connect() {
 console.log("jojo");
 
 
-console.log(connect());
+//console.log(connect());
 
 console.log("can y'all hear me?");
 
 
 
 console.log("TESTTEST");
+
+import {connectMongoose, expressShizzle, testCase} from './api_lyrics/main.js'
+
+connectMongoose().then(testCase()).then(expressShizzle());
