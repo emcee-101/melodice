@@ -1,9 +1,26 @@
 import express from 'express';
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose'
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+export function expressShizzle(){
+
+  const app = express();
+
+  // respond with "hello world" when a GET request is made to the homepage
+  app.get('/', function(req, res) {
+    res.send('hello world');
+  });
+
+  //app.use('/lyrics', LyricsRequestor());
+
+  app.listen(10093, () => {
+    console.log('Lyrics Service is listening to http://localhost:8080');
+  });
 
 
-
+};
 
 export async function connectMongoose() {
 
