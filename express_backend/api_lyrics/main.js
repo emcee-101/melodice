@@ -1,5 +1,4 @@
 import express from 'express';
-import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -60,11 +59,15 @@ export async function testCase(){
   
 };
 
-export async function requestLyrics(id){
-  
+
+
+/*
+
+ 
     // DEPRECATED
 
-    /*
+export async function requestLyrics(id){
+ 
     // TESTCASE
     // create a document instance
     let newSong = new Song({name: 'Is love Mongoose', type: 'l', author: 1, lyrics: 'Hili Hello wir sind alle froh', audiofile: 'amogus.mp3'});
@@ -91,13 +94,7 @@ export async function requestLyrics(id){
         //console.log(all + "hello btw");
       });
 
+  };
+}
 
-
-
-  Song.findById({_id: id}).lean().exec(function(err, docs) {
-    if (err) console.log(err); return err;
-    if (docs) return docs;
-  });
-
-*/ 
-};
+*/
