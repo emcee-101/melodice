@@ -35,7 +35,3 @@ console.log("can y'all hear me?");
 
 
 console.log("TESTTEST");
-
-//import { connectMongoose } from './api_lyrics/main.js';
-
-//connectMongoose();
