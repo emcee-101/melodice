@@ -26,7 +26,7 @@ export function initExpressServer(name, url_suffix, port, callback_function){
 
   const app = express();
 
-  app.get('/'+url_suffix+'/:parameter', function(req, res){callback_function(req, res)});
+  app.get(url_suffix, function(req, res){callback_function(req, res)});
 
 
 
