@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  frontend:
+    build: react_frontend
+    container_name: "Team-Melodice-Official-FRONTEND"
+    command: npm start
+    ports:
+      - 10094:10094
+    networks:
+      - public
+    depends_on:
+      - backend
+  backend:
+    build: express_backend
+    container_name: "Team-Melodice-Official-BACKEND"
+    command: npm start
+    environment:
+      - DATABASE_DB=example
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=secret
+      - DATABASE_HOST=database
+    ports:
+      - 10091:10091
+      - 10092:10092
+      - 10093:10093
+    networks:
+      - public
+      - private
+    depends_on:
+        - database
+  database:
+      build: mongodb_data
+      container_name: "Team-Melodice-Official-DATABASE-IMPLEMENTATION"
+      restart: always
+      volumes:
+        - db_data:/db
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=root
+      ports:
+        - 27017:10095
+      networks:
+        - private
+networks:
+  public:
+  private:
+volumes:
+  db_data:
