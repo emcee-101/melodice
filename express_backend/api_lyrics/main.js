@@ -1,13 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose'
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import {Song, songSchema} from './data_model.js'
+import {Song} from "../common_db_schema/data_model.js";
+
 
 
 export async function connectMongoose() {
 
-  var db = await mongoose.connect('mongodb://root:root@database:27017');
+  await mongoose.connect('mongodb://root:root@database:27017');
   await mongoose.connection.dropDatabase();
   console.log("Connection Successful!");
    
