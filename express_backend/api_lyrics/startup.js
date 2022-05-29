@@ -13,6 +13,6 @@ export function init(){
     connectMongoose()
         .then(clearDatabase())
         .then(testCase())
-        .then(initExpressServer('Lyrics', 'lyrics', 10093, handleLyricsrequest));
+        .then(initExpressServer('Lyrics', '/lyrics/:parameter', 10093, handleLyricsrequest));
 
     }
