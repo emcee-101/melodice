@@ -22,7 +22,7 @@ export async function clearDatabase() {
    
 };
 
-export function expressShizzle(name, url_suffix, port, callback_function){
+export function initExpressServer(name, url_suffix, port, callback_function){
 
   const app = express();
 
