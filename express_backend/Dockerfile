@@ -1,5 +1,8 @@
-# Definieren des Basis Docker Images
-FROM node:14
+# Definieren des Basis Docker Images (waaaay mor elightweight than the official node :) )
+FROM alpine
+
+# Install node on alpine Linux
+RUN apk add --update nodejs npm
 
 # Erstellen des Anwendungsverzeichnisses
 WORKDIR /usr/src/app
