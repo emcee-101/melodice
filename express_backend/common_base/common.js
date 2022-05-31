@@ -1,5 +1,6 @@
+import express from 'express'
 import mongoose from 'mongoose'
-import {DATABASE_URL, LISTEN_PORT} from "./config.js"
+import {DATABASE_URL} from "./config.js"
 
 
 
@@ -31,7 +32,7 @@ export function initExpressServer(name, url_suffix, port, callback_function){
 
 
   app.listen(port, () => {
-    console.log(`${name} Service is listening at http://localhost:${LISTEN_PORT}/${url_suffix}`);
+    console.log(`${name} Service is listening at http://localhost:${port}/${url_suffix}`);
   });
 
 

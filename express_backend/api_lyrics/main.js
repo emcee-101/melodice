@@ -1,4 +1,4 @@
-import {Song} from "../common_db_schema/data_model.js";
+import {Song} from "../common_base/data_model.js";
 
 
 
