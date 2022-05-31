@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import { Song } from "../common_db_schema/data_model.js";
+import { Song } from "../common_base/data_model.js";
 
 const DATABASE_URL = "mongodb://root:root@database:27017";
 const LISTEN_PORT = 10092;
