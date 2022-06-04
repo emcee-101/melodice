@@ -1,11 +1,11 @@
 import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/common.js'
-import {matchSong} from './main.js'
+import {requestMatcher} from './main.js'
 import * as config from './config.js';
 
-export function init(){
-
+export function init()
+{
     connectMongoose()
         .then(clearDatabase())
-        .then(initExpressServer('Matcher', '/matcher/:id', 
-        config.LISTEN_PORT, matchSong));
-    }
+        .then(initExpressServer('Matcher', '/matcher/:songname', 
+        config.LISTEN_PORT, requestMatcher));
+};
