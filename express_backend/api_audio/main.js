@@ -28,22 +28,16 @@ export async function handleAudioRequests(req, res){
         if (err){console.log(err); res.status(404); res.send({})}
 
         //get file name of sound file of wanted ID
-        else {res.status(200); res.send({audiofile: docs.audioFile})};
+        else {res.status(200); res.send({audiourl: "http://localhost:10091/audio_files/"+docs.audioFile})};
 
         }
 
     );
 
 
-
-    
-
-
-
-
 }
 
-
+/*
 export async function serveAudioFile(req, res){
 
     console.log("The name of the directory were currently in is: " + __dirname);
@@ -53,3 +47,4 @@ export async function serveAudioFile(req, res){
     res.status(200); res.send({audiofile: file});
 
 }
+*/
