@@ -11,8 +11,8 @@ export function init(){
 
     app.get('/audio/:parameter', function(req, res){handleAudioRequests(req, res)});
   
-    app.get('/audio/file/:parameter', function(req, res){serveAudioFile(req, res)});
-  
+    //app.get('/audio/file/:parameter', function(req, res){serveAudioFile(req, res)});
+    app.use(express.static('audio_files'));
   
     app.listen(port, () => {
       console.log(`Audio-Service is listening at http://localhost:${port}/audio`);

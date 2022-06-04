@@ -24,20 +24,19 @@ export async function handleAudioRequests(req, res){
     .lean()
     .exec(function(err, docs) {
 
+        //http answer is being sent
         if (err){console.log(err); res.status(404); res.send({})}
 
         //get file name of sound file of wanted ID
-        else {audioFileName = docs.audioFile};
+        else {res.status(200); res.send({audiofile: docs.audioFile})};
 
         }
-
 
     );
 
 
 
-        //http answer is being sent
-    res.status(200); res.send({audiofile: audioFileName});
+    
 
 
 
