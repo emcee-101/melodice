@@ -1,39 +1,28 @@
-import fs from 'fs'
-import mongoose from 'mongoose'
-import {connectMongoose} from '../common_base/common.js'
 import {Song} from "../common_base/data_model.js";
-
-
 
 
 
 export async function handleAudioRequests(req, res){
 
-    // Check State of Database to implement logic to initialize mongoose only once if necessary
-    console.log(mongoose.connection.readyState);
-
-    if(mongoose.connection.readyState == 0 || mongoose.connection.readyState == 3){
-
-        connectMongoose();
-
-    }
-
-    let audioFileName;
-
     Song.findById({_id: req.params.parameter})
     .lean()
     .exec(function(err, docs) {
 
-        //http answer is being sent
-        if (err){console.log(err); res.status(404); res.send({})}
+            //http answer is being sent
+            if (err){
+                console.log(err); 
+                res.status(404); 
+                res.send({})
+            }
+            else {
+                res.status(200); 
 
-        //get file name of sound file of wanted ID
-        else {res.status(200); res.send({audiourl: "http://localhost:10091/audio_files/"+docs.audiofile})};
+                    //docs.audiofile is filename of requested document
 
+                res.send({audiourl: "http://localhost:10091/audio_files/" + docs.audiofile})
+
+            };
         }
-
     );
-
-
 }
 

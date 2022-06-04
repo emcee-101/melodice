@@ -1,4 +1,5 @@
-import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/common.js'
+import {connectMongoose} from '../common_base/common.js'
+import mongoose from 'mongoose'
 import {handleAudioRequests} from './main.js'
 import express from 'express'
 import { fileURLToPath } from 'url'
@@ -9,23 +10,35 @@ import { dirname } from 'path'
 
 export function init(){
 
+    // Check State of Database to implement logic to initialize mongoose only once if necessary
+    console.log(mongoose.connection.readyState);
+    if(mongoose.connection.readyState == 0 || mongoose.connection.readyState == 3){
+    
+      connectMongoose();
+    
+    }
+    
+    // get directory name to later be able to access folder with songs
     const __filename = fileURLToPath(import.meta.url)
     const __dirname = dirname(__filename)
 
     const app = express();
     let port = 10091;
 
+
+    // Create API 
     app.get('/audio/:parameter', function(req, res){handleAudioRequests(req, res)});
-  
-    //app.get('/audio/file/:parameter', function(req, res){serveAudioFile(req, res)});
+    
+    // Serve Audio Files (http://localhost:10091/audio_files/file.whatever)
     app.use(express.static(__dirname + '/audio_files'));
-  
     app.get('/audio_files/:parameter', function(req, res){
       
-      console.log(__dirname+'/audio_files/'+req.params.parameter);
-
+      // send audiofile as Response to be displayed in Browser
       res.sendFile(__dirname+'/audio_files/'+req.params.parameter);
+
       });
+
+
     app.listen(port, () => {
       console.log(`Audio-Service is listening at http://localhost:${port}/audio`);
     });
