@@ -10,9 +10,7 @@ import {handleLyricsRequest,testCase} from './main.js'
 // start Lyrics API
 export function init(){
     
-    connectMongoose()
-        .then(clearDatabase())
-        .then(testCase())
-        .then(initExpressServer('Lyrics', '/lyrics/:parameter', 10093, handleLyricsRequest));
+    
+    initExpressServer('Lyrics', '/lyrics/:parameter', 10093, handleLyricsRequest);
 
     }

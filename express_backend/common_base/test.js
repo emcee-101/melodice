@@ -1,11 +1,9 @@
-import { matchSong } from "./main";
-
-createNewSong()
-matchSong('love Mongoo')
+import {Song} from "./data_model.js";
 
 
 
-async function createNewSong(){
+ export async function createNewTestSong(){
+
     let newSong = new Song({name: 'Is love Mongoose', type: 'l', author: 1, lyrics: 'Hili Hello wir sind alle froh', audiofile: 'amogus.mp3'});
   
     await newSong.save(function (err, track) {
