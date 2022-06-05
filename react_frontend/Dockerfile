@@ -21,7 +21,7 @@ COPY . .
 
 # Freigeben des Ports, unter dem der
 # Express-Server läuft
-EXPOSE 10124
+EXPOSE 10094
 
 # Starten des definierten npm-Scripts
 CMD [ "npm", "start" ]

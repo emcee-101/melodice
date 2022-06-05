@@ -21,7 +21,7 @@ export async function handleLyricsRequest(req, res){
 
 export async function testCase(){
 
-  let newSong = new Song({name: 'Is love Mongoose', type: 'l', author: 1, lyrics: 'Hili Hello wir sind alle froh', audiofile: 'amogus.mp3'});
+  let newSong = new Song({name: 'Is love Mongoose', type: 'l', author: 1, lyrics: 'Hili Hello wir sind alle froh', audiofile: 'file_example_MP3_1MG.mp3'});
 
   await newSong.save(function (err, track) {
 
