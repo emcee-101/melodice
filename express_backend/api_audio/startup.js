@@ -1,4 +1,3 @@
-import {connectMongoose} from '../common_base/common.js'
 import mongoose from 'mongoose'
 import {handleAudioRequests} from './main.js'
 import express from 'express'
@@ -10,13 +9,6 @@ import { dirname } from 'path'
 
 export function init(){
 
-    // Check State of Database to implement logic to initialize mongoose only once if necessary
-    console.log(mongoose.connection.readyState);
-    if(mongoose.connection.readyState == 0 || mongoose.connection.readyState == 3){
-    
-      connectMongoose();
-    
-    }
     
     // get directory name to later be able to access folder with songs
     const __filename = fileURLToPath(import.meta.url)

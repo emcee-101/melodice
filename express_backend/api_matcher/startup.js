@@ -4,8 +4,5 @@ import * as config from './config.js';
 
 export function init()
 {
-    connectMongoose()
-        .then(clearDatabase())
-        .then(initExpressServer('Matcher', '/matcher/:songname', 
-        config.LISTEN_PORT, requestMatcher));
+    initExpressServer('Matcher', '/matcher/:songname', config.LISTEN_PORT, requestMatcher);
 };
