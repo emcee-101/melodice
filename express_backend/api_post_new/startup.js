@@ -1,8 +1,8 @@
 import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/common.js'
-import {requestMatcher} from './main.js'
+import {requestPost} from './main.js'
 import * as config from './config.js';
 
 export function init()
 {
-    initExpressServer('Poster', '/post/', config.LISTEN_PORT, requestMatcher);
+    initExpressServer('Matcher', '/matcher/:songname', 10097, requestPost);
 };
