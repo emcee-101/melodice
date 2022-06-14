@@ -15,7 +15,7 @@ async function requestPost(req, res){
             break;
         
         }
-    }
+
     //export const  songSchema = new mongoose.Schema({name: String, type: ['audio', 'lyrics', 'both'], author: Number, lyrics: String, audiofile: String});
 
     let expl1 = {name: 'Amongus Song', type: 'lyrics', author: 'placeholder', lyrics: 'Hallo Welt'}
