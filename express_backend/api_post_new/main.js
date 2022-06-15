@@ -1,20 +1,8 @@
 import { connectMongoose } from "../common_base/common.js";
 import {Song} from "../common_base/data_model.js";
 
-async function requestPost(req, res){
 
-    switch(req.body.type){
-
-        case lyrics:
-            
-            let newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, lyrics: req.body.lyrics});
-            break;
-        case audio:
-            break;
-        case both:
-            break;
-        
-        }
+function testCase(){
 
     //export const  songSchema = new mongoose.Schema({name: String, type: ['audio', 'lyrics', 'both'], author: Number, lyrics: String, audiofile: String});
 
@@ -26,10 +14,56 @@ async function requestPost(req, res){
     const newSong1 = new Song(expl1);
     const newSong2 = new Song(expl2);
     const newSong3 = new Song(expl3);
-    const newSong4 = new Song(expl3);
+    const newSong4 = new Song(expl4);
 
-    newSong1.save();
-    newSong2.save();
-    newSong3.save();
-    newSong4.save();
+
+}
+
+
+async function requestPost(req, res){
+
+    let newSong, audiofilename;
+
+    switch(req.body.type){
+        case lyrics:
+            newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, lyrics: req.body.lyrics});
+            break;
+        case audio:
+            audiofilename = saveAudioFile(req.body.audiodata);
+            newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, audiofile: audiofilename});
+            break;
+        case both:
+            let foundSong = await Song.find({_id: req.body._id}).lean();
+
+            switch(req.body.songType){
+                case 'addLyrics':
+                    foundSong.lyrics = req.body.lyrics;
+                    break;
+                case 'createBoth':
+                    audiofilename = saveAudioFile(req.body.audiodata);
+                    newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, audiofile: audiofilename, lyrics: req.body.lyrics});
+                    break;
+                case 'addSong':
+                    audiofilename = saveAudioFile(req.body.audiodata);
+                    newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, lyrics: req.body.lyrics});
+                    break;
+            } 
+
+            break;
+        }
+
+        if(newSong){
+
+            await newSong.save();
+            res.status(200).send({message: 'saving song sucessful'});
+        
+        }
+        else{
+
+            res.send(400).send({message: 'saving song unsucessful'});
+
+        }
+
+
+
 }
