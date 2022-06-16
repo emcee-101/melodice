@@ -79,7 +79,12 @@ export async function requestPost(req, res){
         case add:
             
             // find corresponding song
-            let song = await Song.findOne({_id: req.body.id}, (err)=>{console.log('document not found');resMessage='object to be updated not found,'})
+            let song = await Song.findOne({_id: req.body.id}, (err)=>{
+                if(err){
+                    console.log('document not found');
+                    resMessage='object to be updated not found,'
+                }
+            })
 
             switch(req.body.addType){
 
