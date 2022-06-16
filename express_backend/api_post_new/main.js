@@ -19,51 +19,63 @@ function testCase(){
 
 }
 
+async function saveAudioFile(){}
 
-async function requestPost(req, res){
+export async function requestPost(req, res){
 
-    let newSong, audiofilename;
+    let song, audiofilename;
 
-    switch(req.body.type){
+    switch(req.body.typeOfPost){
+        // add new Song in DB with only lyrics
         case lyrics:
-            newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, lyrics: req.body.lyrics});
+            song = new Song({name: req.body.name, type: req.body.type, author: req.body.author, lyrics: req.body.lyrics});
             break;
+        
+        // add new Song in DB with only audio
         case audio:
             audiofilename = saveAudioFile(req.body.audiodata);
-            newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, audiofile: audiofilename});
+            song = new Song({name: req.body.name, type: req.body.type, author: req.body.author, audiofile: audiofilename});
             break;
-        case both:
-            let foundSong = await Song.find({_id: req.body._id}).lean();
-
-            switch(req.body.songType){
-                case 'addLyrics':
-                    foundSong.lyrics = req.body.lyrics;
-                    break;
-                case 'createBoth':
-                    audiofilename = saveAudioFile(req.body.audiodata);
-                    newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, audiofile: audiofilename, lyrics: req.body.lyrics});
-                    break;
-                case 'addSong':
-                    audiofilename = saveAudioFile(req.body.audiodata);
-                    newSong = new Song({name: req.body.name, type: req.body.type, author: req.body.author, lyrics: req.body.lyrics});
-                    break;
-            } 
-
-            break;
-        }
-
-        if(newSong){
-
-            await newSong.save();
-            res.status(200).send({message: 'saving song sucessful'});
         
+        // add new Song in DB with both
+        case both:
+            audiofilename = saveAudioFile(req.body.audiodata);
+            song = new Song({name: req.body.name, type: req.body.type, author: req.body.author, audiofile: audiofilename, lyrics: req.body.lyrics});
+            break;
+
+        // add either lyrics or audio to a already existing song
+        case add:
+            
+            // find corresponding song
+            let doc = await Song.findOne({_id: req.body.id});
+
+            switch(req.body.addType){
+
+                case 'addLyrics':
+                    doc.lyrics = req.body.lyrics;
+                    break;
+                case 'addAudio':
+                    audiofilename = saveAudioFile(req.body.audiodata);
+                    doc.audiofile = audiofilename;
+                    break;
+                
+            }
+
+            doc.type = 'both';
+            song = doc;
+
+            break;
         }
-        else{
-
-            res.send(400).send({message: 'saving song unsucessful'});
-
-        }
-
+        
+        song.save((err, doc)=>{
+            
+            if(err){
+                res.send(400).send({message: 'saving song unsucessful'});
+            }
+            else{
+                res.status(200).send({message: 'saving song sucessful'});
+            }
+        })
 
 
 }
