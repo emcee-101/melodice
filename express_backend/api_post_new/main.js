@@ -39,7 +39,7 @@ async function saveAudioFile(audioFileData, name){
     const fileContents = Buffer.from(audioFileData, 'base64');
     
     // find out corresponding filename for data to be written
-    const audioFileName = `${getAudioDir()}+'/'+${name}.mp3`;
+    const audioFileName = `${getAudioDir()}/${name}.mp3`;
     
     writeFile(audioFileName, fileContents, function(err) {
 
