@@ -9,21 +9,41 @@
       paths:
       /api_post_new:
         post:
-          summary: Returns a String with lyrics for the audiofile
+          summary: Posts a new Song in the DB, including an optional Audio File
           parameters:
-            - id: string
-              in: path
+            - name: string
+              in: body
               required: true
-              description: ID of Song in DB
+              description: Name of Song
+            - author: string
+              in: body
+              required: true
+              description: Name of Author of Future Track
+            - type: string
+              in: body
+              required: true
+              description: Either 'audio'[=only an audiofile] or 'lyrics'[=only lyrics] or 'both' or 'add' (the type of Entry this is going to be)
+            - name: addType
+              in: body
+              required: false (if song is only overwritten and not added completely new)
+              description: Type of Entry to be added (Either 'addLyrics' or 'addAdio')
+            - name: audiofile
+              in: body
+              required: false (only if audiofile is actually added)
+              description: Base64 encoded Binary Data of File (see source code/test_api_call.js)
+            - name: lyrics
+              in: body
+              required: false (only if lyrics is actually added)
+              description: String of lyrics           
           responses:
             '200':    
-              description: Lyrics are found in the DB
+              description: Sucessfully Added Song to DB
               content:
                 application/json:
                   schema: 
-                    lyrics: string
+                    message: string
             '404':
-              description: Song has not been found
+              description: Unsucessfully added Song to DB
               content:
                 application/json:
                   schema:
