@@ -4,5 +4,5 @@ import * as config from './config.js';
 
 export function init()
 {
-    initExpressServer('Poster', '/post/', config.LISTEN_PORT, requestMatcher);
+    initExpressServer('Matcher', '/matcher/:songname', config.LISTEN_PORT, requestMatcher);
 };
