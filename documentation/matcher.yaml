@@ -1,0 +1,30 @@
+    openapi: 3.0.0
+    info:
+      title: Matcher API
+      description: Put a song name in and get a list of IDs for matching songs in our DB back
+      version: 0.0.1
+    servers:
+      - url: http://localhost:10092/
+        description: Server for this API, exchange "localhost" with IP-Adress when needed
+      paths:
+      /matcher:
+        get:
+          summary: Returns a list of IDs for matching songs.
+          parameters:
+            - id: string
+              in: path
+              required: true
+              description: name of song in DB
+          responses:
+            '200':
+              description: One or more matching songs were found in the DB.
+              content:
+                application/json:
+                  schema:
+                    audiourl: string
+            '404':
+              description: No matching song was found
+              content:
+                application/json:
+                  schema:
+                    message: string
