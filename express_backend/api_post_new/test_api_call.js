@@ -1,4 +1,4 @@
-
+import fs from 'fs'
 
 
 // RUN THIS ON YOUR LOCAL TERMINAL WITH "node test.js"
@@ -16,7 +16,7 @@
     return response.json(); 
   }
   
-  var fs = require('fs')
+  //var fs = require('fs')
 
   // YOU HAVE TO PROVIDE A TEST FILE BY THE NAME OF "test.mp3" IN THIS FODLER
   let audioBuffer = Buffer.from(fs.readFileSync('./test.mp3')).toString('base64')
