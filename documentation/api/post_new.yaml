@@ -1,0 +1,30 @@
+    openapi: 3.0.0
+    info:
+      title: Post API
+      description: 
+      version: 0.0.1
+    servers:
+      - url: http://localhost:10097/
+        description: 
+      paths:
+      /api_post_new:
+        post:
+          summary: Returns a String with lyrics for the audiofile
+          parameters:
+            - id: string
+              in: path
+              required: true
+              description: ID of Song in DB
+          responses:
+            '200':    
+              description: Lyrics are found in the DB
+              content:
+                application/json:
+                  schema: 
+                    lyrics: string
+            '404':
+              description: Song has not been found
+              content:
+                application/json:
+                  schema:
+                    message: string

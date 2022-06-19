@@ -1,0 +1,30 @@
+    openapi: 3.0.0
+    info:
+      title: Audio API
+      description: Put a ID in and get a URL to a Song in our DB back
+      version: 0.0.1
+    servers:
+      - url: http://localhost:10091/
+        description: Server for this API, exchange "localhost" with IP-Adress when needed
+      paths:
+      /audio:
+        get:
+          summary: Returns a URL to a audio file.
+          parameters:
+            - id: string
+              in: path
+              required: true
+              description: ID of Song in DB
+          responses:
+            '200':    
+              description: A song is found in the DB and the corresponding Link is being returned
+              content:
+                application/json:
+                  schema: 
+                    audiourl: string
+            '404':
+              description: Song has not been found
+              content:
+                application/json:
+                  schema:
+                    message: string
