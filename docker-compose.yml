@@ -13,6 +13,7 @@ services:
   backend:
     build: express_backend
     container_name: "Team-Melodice-Official-BACKEND"
+    restart: on-failure
     command: npm start
     environment:
       - DATABASE_DB=example
@@ -24,7 +25,6 @@ services:
       - 10092:10092
       - 10093:10093
       - 10097:10097
-
     networks:
       - public
       - private
@@ -35,7 +35,7 @@ services:
       container_name: "Team-Melodice-Official-DATABASE-IMPLEMENTATION"
       restart: always
       volumes:
-        - db_data:/db
+        - "./db_data:/data/db"
       environment:
         - MONGO_INITDB_ROOT_USERNAME=root
         - MONGO_INITDB_ROOT_PASSWORD=root
