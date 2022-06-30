@@ -43,6 +43,7 @@ export default function overview(props) {
                 <songElement
                     key={i}
                     id={currentData.id}
+                    songData={data[i]}
                 />
             ))}
 
