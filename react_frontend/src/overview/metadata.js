@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 
 
 
 
 
-export default function metadata(props) {
+export default function Metadata(props) {
 
     const [metadata, setMetadata] = useState({});
     async function getMetadata(){
@@ -13,7 +13,7 @@ export default function metadata(props) {
 
     }
 
-    return(<></>)
+    return(<p>Cowa</p>)
 
 
 }

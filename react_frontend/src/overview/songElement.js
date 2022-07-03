@@ -1,9 +1,8 @@
 import React from "react";
-import waveform from 'waveform.js';
-import player from 'player.js';
-import metadata from 'waveform.js';
+import Player from './player.js';
+import Metadata from './metadata.js';
 
-export default function songElement(props) {
+export default function SongElement(props) {
 
     if(props.id){
 
@@ -13,9 +12,8 @@ export default function songElement(props) {
 
     return (
         <div>
-            <waveform/>
-            <player/>
-            <metadata/>
+            <Player/>
+            <Metadata/>
         </div>
     );
 }

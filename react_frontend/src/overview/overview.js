@@ -1,17 +1,18 @@
 
 import React, { useState } from "react";
-import songElement from "songElement.js"
+import SongElement from "./songElement.js"
 
 
+const createArray = length => [...Array(length)];
 
 
-export default function overview(props) {
+export default function Overview(props) {
 
     const [currentData, setData] = useState([]);
-
+/*
     async function getDBData(){
 
-        if (props.singleTrack == 1){
+        if (props.singleTrack === 1){
             
             // prepare Data Structure to be compatible with the return value of the fetch in the else-branch
             let singleID = [
@@ -31,22 +32,25 @@ export default function overview(props) {
         }
     } 
     
-    await getDBData().then(data => setData(data)) 
+    getDBData().then(data => setData(data)) 
     
-
+*/
     return (
         <div>
-
+{/*
             {createArray(currentData).map((n, i) => (
                 
                 // songElement gets ID from Array of IDs currentData which resembles all tracks in the Database
-                <songElement
+                <SongElement
                     key={i}
-                    id={currentData.id}
-                    songData={data[i]}
+                    songData={currentData[i]}
                 />
             ))}
+            */}
 
+            <SongElement
+                    key={1}
+                    songData={1} />
         </div>
     );
 }
