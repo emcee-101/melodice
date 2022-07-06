@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
 import {handleAudioRequests} from './main.js'
 import express from 'express'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import cors from "cors"
 
 
 
@@ -20,6 +20,8 @@ export function init(){
 
     // Create API 
     app.get('/audio/:parameter', function(req, res){handleAudioRequests(req, res)});
+
+    app.use(cors());
     
     // Serve Audio Files (http://localhost:10091/audio_files/file.whatever)
     app.use(express.static(__dirname + '/audio_files'));

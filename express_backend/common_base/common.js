@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import {DATABASE_URL} from "./config.js"
-
+import cors from "cors"
 
 
 
@@ -26,7 +26,10 @@ export async function clearDatabase() {
 export function initExpressServer(name, url_suffix, port, callback_function){
 
   const app = express();
-
+  
+  
+  app.use(cors());
+  
   app.get(url_suffix, function(req, res){callback_function(req, res)});
 
 
