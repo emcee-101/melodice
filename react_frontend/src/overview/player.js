@@ -8,7 +8,7 @@ import React, {
 import ReactAudioPlayer from 'react-audio-player';
 import styled from "styled-components";
 import { WaveSurfer, WaveForm, Region, Marker } from "wavesurfer-react";
-
+import useFetch from "react-fetch-hook"
 
 
 
@@ -17,29 +17,19 @@ const Buttons = styled.div`
 `;
 
 const Button = styled.button``;
-let songid = '';
+let songid;
 
+
+
+
+fetch("http://backend:10092/matcher/mongoose")
+.then(response => response.json())
+.then(data => {console.log(data); 
+             songid = data._id;
+            console.log(songid)})
+.catch(e => console.log(e));
 
 export default function Player(props) {
-
-    const [url, setURL] = useState();
-
-    async function getAudioURL(){
-
-        fetch('localhost:10092/matcher/mongoose')
-        .then(response => response.json())
-        .then(data => {console.log(data); 
-                    songid = data._id});
-
-        fetch('localhost:10091/audio/'+songid)
-        .then(response => response.json())
-        .then(data => {console.log(data); 
-                    setURL(data.audiourl)});
-
-    }
-
-    getAudioURL()
-
 
     const wavesurferRef = useRef();
     const handleWSMount = useCallback(
@@ -48,16 +38,26 @@ export default function Player(props) {
 
 
         if (wavesurferRef.current) {
-
-            wavesurferRef.current.load(url);
-
-            wavesurferRef.current.on("ready", () => {
+/*
+            getAudioURL()
+            .then(wavesurferRef.current.load(url))
+            .then(wavesurferRef.current.on("ready", () => {
                 console.log("WaveSurfer is ready");
-            });
-
-            wavesurferRef.current.on("loading", (data) => {
+            }))
+            .then(wavesurferRef.current.on("loading", (data) => {
                 console.log("loading --> ", data);
-            });
+            }));*/
+            
+
+                    
+            if(data2){
+                wavesurferRef.current.load(data2);
+                wavesurferRef.current.on("ready", () => {
+                    console.log("WaveSurfer is ready")});
+                wavesurferRef.current.on("loading", (data) => {
+                    console.log("loading --> ", data)});
+                }
+
         }
     }
     );
@@ -67,6 +67,10 @@ export default function Player(props) {
         wavesurferRef.current.playPause();
       });
 
+    if (isLoading || isLoading2) {
+        return <div className="Player">Loading...</div>;
+      }  
+    
     return (<div className="Player">
                 <WaveSurfer onMount={handleWSMount}>
                     <WaveForm id="waveform" />
