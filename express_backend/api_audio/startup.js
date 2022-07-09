@@ -17,11 +17,11 @@ export function init(){
     const app = express();
     let port = 10091;
 
+    app.use(cors());
 
     // Create API 
     app.get('/audio/:parameter', function(req, res){handleAudioRequests(req, res)});
 
-    app.use(cors());
     
     // Serve Audio Files (http://localhost:10091/audio_files/file.whatever)
     app.use(express.static(__dirname + '/audio_files'));

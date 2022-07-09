@@ -3,12 +3,12 @@
 // url  example: "http://localhost:10092/matcher/mongoose"
 // method example: "POST"
 
-export async function standardFetch(url, method='GET'){
+export function standardFetch(url, method='GET'){
 
     let response = null;
 
     try{
-        response = fetch(url,
+        return fetch(url,
                         {
                             mode: 'cors',
                             method: method,
@@ -18,9 +18,7 @@ export async function standardFetch(url, method='GET'){
                             }
                     
                         
-                        })
-        return response.json();
-
+                        }).json();
     } catch(e) {
 
         console.log('Error ocurred:' + e);

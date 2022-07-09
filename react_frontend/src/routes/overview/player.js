@@ -32,7 +32,7 @@ export default function Player({songData = {_id: "bogus"}}) {
             if (wavesurferRef.current) {
 
                 
-                if(musURL !== ''){
+                if(musURL){
                     wavesurferRef.current.load(musURL);
                     wavesurferRef.current.on("ready", () => {
                     console.log("WaveSurfer is ready")});
@@ -41,42 +41,55 @@ export default function Player({songData = {_id: "bogus"}}) {
                 }
 
         }
-    }
-    );
+        }, []);
 
 
-    async function fetchData(){
+    function fetchData(stateID){
         
         let id, answer;
         
-        console.log("initial id: " + songData)
-        if (songData._id == "bogus"){
+        try {
 
-            // testcase with no songinfos being passed 
-            let answerOpt = standardFetch('http://localhost:10092/matcher/mongoose', "GET");
-            id = answerOpt._id
+            if (stateID == "bogus" || stateID){
+
+                console.log("initial id: " + songData._id)
+    
+                // testcase with no songinfos being passed 
+                let answerOpt = standardFetch('http://localhost:10092/matcher/Mongoose', "GET");
+                id = answerOpt._id
+                
+                console.log(answerOpt)
+    
+    
+            } else if (stateID) {
+    
+                id = stateID._id
             
+            } else {
+    
+                console.log("stateID has a incorrect value")
+                throw "error with StateID";
+    
+            }
 
-        } else {
+            console.log("id: " + id)
 
-            id = songData._id
-        
+            answer = standardFetch('http://localhost:10091/audio/' + id, "GET");
+            
+            console.log("answer:" )
+            console.log(answer)
+
+            updateMusicURL(answer.audiourl);
+
+
         }
-
-        
-        console.log("id: " + id)
-
-        answer = standardFetch('http://localhost:10091/audio/' + id, "GET");
-        
-        console.log("answer:" + answer)
-
-        updateMusicURL(answer.audiourl);
-
+        catch(e) {console.log(e)}
+  
     }
 
 
     // run only once when component mounted
-    useEffect(() => { fetchData(); }, [songData, fetchData]);
+    useEffect(() => { fetchData(songData._id); }, [songData, fetchData]);
 
     const play = useCallback(() => {
         console.log(wavesurferRef.current)

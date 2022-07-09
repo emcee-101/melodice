@@ -46,7 +46,6 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
             */}
 
             <SongElement
-                    key={1}
                     songData={1} />
         </div>
     );

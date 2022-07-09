@@ -12,7 +12,7 @@ export async function handleAudioRequests(req, res){
             if (err){
                 console.log(err); 
                 res.status(404); 
-                res.send({})
+                res.send({message: "failed to find song with id" + req.params.parameter})
             }
             else {
                 res.status(200); 
