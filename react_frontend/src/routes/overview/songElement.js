@@ -8,7 +8,8 @@ export default function SongElement({songData={_id: "bogus"}}) {
         <div>
             <Player 
                 songData = {{_id: songData._id}}/>
-            <Metadata/>
+            <Metadata
+                songData = {songData}/>
         </div>
     );
 }

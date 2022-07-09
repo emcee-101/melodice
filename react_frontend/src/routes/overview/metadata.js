@@ -1,19 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 
 
 
 
 
-export default function Metadata(props) {
+export default function Metadata({key = 1, songData = {}}) {
 
-    const [metadata, setMetadata] = useState({});
-    async function getMetadata(){
 
-        // fetch
-
-    }
-
-    return(<p>Cowa</p>)
+    return(<p>
+        {key}. Element im Bunde: {songData.name}
+    </p>)
 
 
 }

@@ -11,6 +11,6 @@ import {handleFullDataRequest} from './main.js'
 export function init(){
     
     
-    initExpressServer('GetFullData', '/getfulldata/', 10098, handleFullDataRequest);
+    initExpressServer('GetFullData', '/getfulldata/:id?', 10098, handleFullDataRequest);
 
     }

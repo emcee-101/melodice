@@ -4,9 +4,8 @@
 // method example: "POST"
 
 export async function standardFetch(url, method='GET'){
-
-    try{
-         return fetch(url,
+    
+    return fetch(url,
                         {
                             mode: 'cors',
                             method: method,
@@ -18,12 +17,8 @@ export async function standardFetch(url, method='GET'){
                         
                         })
                         .then( (response) => { return response.json(); })
-                        .then( (jsonObj) => {return jsonObj});
-    } catch(e) {
-
-        console.log('Error ocurred:' + e);
-        return { error: 'e'}
+                        .then( (jsonObj) => {return jsonObj})
+                        .catch((e)=>{(console.log(e)); return {message: "there has been an error"}})
     
     }    
 
-}

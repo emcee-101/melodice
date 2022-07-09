@@ -20,7 +20,7 @@ const Button = styled.button``;
 
 
 
-export default function Player({songData = {_id: "bogus"}}) {
+export default function Player({index, songData = {_id: "bogus"}}) {
 
     const [musURL, updateMusicURL] = useState('');
     const wavesurferRef = useRef();
@@ -58,8 +58,7 @@ export default function Player({songData = {_id: "bogus"}}) {
                 answer1 = await standardFetch('http://localhost:10092/matcher/Mongoose', "GET")
               
                 id = answer1[0]._id
-                console.log(answer1[0])
-                console.log(id)
+  
     
     
             } else if (stateID) {
@@ -69,6 +68,7 @@ export default function Player({songData = {_id: "bogus"}}) {
             } else {
     
                 console.log("stateID has a incorrect value")
+                console.log(stateID)
                 throw "error with StateID";
     
             }
@@ -99,13 +99,13 @@ export default function Player({songData = {_id: "bogus"}}) {
 
     if (musURL == '') {
 
-            return <div className="Player">Loading...</div>;
+            return <div className="Player" >Loading...</div>;
 
       }  else {
 
-            return (<div className="Player">
+            return (<div className="Player" >
                         <WaveSurfer onMount={handleWSMount}>
-                            <WaveForm id="waveform" />
+                            <WaveForm id="waveform" cursorColor="transparent" />
                                 
                         </WaveSurfer>
                         <Buttons>
