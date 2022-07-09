@@ -56,7 +56,7 @@ export default function Player({songData = {_id: "bogus"}}) {
         if (songData._id == "bogus"){
 
             // testcase with no songinfos being passed 
-            let answerOpt = standardFetch('http://localhost:10092/matcher/mongoose', GET);
+            let answerOpt = standardFetch('http://localhost:10092/matcher/mongoose', "GET");
             id = answerOpt._id
             
 
