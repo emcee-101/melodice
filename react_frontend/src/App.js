@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Header from "./components/Header";
 import OverviewRoot from './routes/overview/overviewRoot'
-
+import Play from './routes/play/play'
 
 
 function App() {
@@ -20,6 +20,8 @@ function App() {
             <Route path="/overview" element={<OverviewRoot />} />
               
             <Route path="/" element={<OverviewRoot />} />
+
+            <Route path="/play" element={<Play />} />
             
           </Routes>
 
