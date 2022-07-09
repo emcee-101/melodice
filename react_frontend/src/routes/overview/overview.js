@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import SongElement from "./songElement.js"
 
 
-const createArray = length => [...Array(length)];
-
-
-export default function Overview(props) {
+export default function Overview({singleTrack = "false", requestedTrackID = null}) {
 
     const [currentData, setData] = useState([]);
 /*
