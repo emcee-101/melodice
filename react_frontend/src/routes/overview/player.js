@@ -41,12 +41,12 @@ export default function Player({songData = {_id: "bogus"}}) {
                 }
 
         }
-        }, []);
+        }, [musURL]);
 
 
-    function fetchData(stateID){
+    async function fetchData(stateID){
         
-        let id, answer;
+        let id, answer1, answer2;
         
         try {
 
@@ -55,10 +55,11 @@ export default function Player({songData = {_id: "bogus"}}) {
                 console.log("initial id: " + songData._id)
     
                 // testcase with no songinfos being passed 
-                let answerOpt = standardFetch('http://localhost:10092/matcher/Mongoose', "GET");
-                id = answerOpt._id
-                
-                console.log(answerOpt)
+                answer1 = await standardFetch('http://localhost:10092/matcher/Mongoose', "GET")
+              
+                id = answer1[0]._id
+                console.log(answer1[0])
+                console.log(id)
     
     
             } else if (stateID) {
@@ -74,12 +75,12 @@ export default function Player({songData = {_id: "bogus"}}) {
 
             console.log("id: " + id)
 
-            answer = standardFetch('http://localhost:10091/audio/' + id, "GET");
-            
-            console.log("answer:" )
-            console.log(answer)
+            answer2 = await standardFetch('http://localhost:10091/audio/' + id, "GET")
 
-            updateMusicURL(answer.audiourl);
+            console.log("answer:" )
+            console.log(answer2)
+
+            updateMusicURL(answer2.audiourl);
 
 
         }
@@ -89,7 +90,7 @@ export default function Player({songData = {_id: "bogus"}}) {
 
 
     // run only once when component mounted
-    useEffect(() => { fetchData(songData._id); }, [songData, fetchData]);
+    useEffect(() => { fetchData(songData._id); }, []);
 
     const play = useCallback(() => {
         console.log(wavesurferRef.current)

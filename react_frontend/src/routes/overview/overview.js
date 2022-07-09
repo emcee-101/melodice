@@ -46,7 +46,7 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
             */}
 
             <SongElement
-                    songData={1} />
+                    songData={{_id: "bogus"}} />
         </div>
     );
 }
