@@ -11,11 +11,9 @@
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "react-audio-player": "^0.17.0",
     "react-router-dom": "^6.3.0",
     "wavesurfer-react": "^2.2.1",
-    "styled-components": "^5.3.5",
-    "react-fetch-hook": "^1.9.5"
+    "styled-components": "^5.3.5"
   },
   "scripts": {
     "start": "PORT=10094 react-scripts start",

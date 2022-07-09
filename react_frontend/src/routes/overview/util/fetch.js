@@ -5,8 +5,6 @@
 
 export async function standardFetch(url, method='GET'){
 
-    let response = null;
-
     try{
          return fetch(url,
                         {
