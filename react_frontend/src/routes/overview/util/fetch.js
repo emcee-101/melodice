@@ -5,18 +5,20 @@
 
 export async function standardFetch(url, method='GET'){
 
+    let response = null;
+
     try{
-        fetch(url,
-            {
-                mode: 'cors',
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-        
-            
-            })
+        response = fetch(url,
+                        {
+                            mode: 'cors',
+                            method: method,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                    
+                        
+                        })
         return response.json();
 
     } catch(e) {

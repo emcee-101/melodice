@@ -1,5 +1,6 @@
 import React, {
     useCallback,
+    useEffect,
     useRef,
     useState,
   } from "react";
@@ -31,7 +32,7 @@ export default function Player({songData = {_id: "bogus"}}) {
             if (wavesurferRef.current) {
 
                 
-                if(musURL != ''){
+                if(musURL !== ''){
                     wavesurferRef.current.load(musURL);
                     wavesurferRef.current.on("ready", () => {
                     console.log("WaveSurfer is ready")});
@@ -43,10 +44,6 @@ export default function Player({songData = {_id: "bogus"}}) {
     }
     );
 
-    const play = useCallback(() => {
-        console.log(wavesurferRef.current)
-        wavesurferRef.current.playPause();
-      });
 
     async function fetchData(){
         
@@ -77,9 +74,17 @@ export default function Player({songData = {_id: "bogus"}}) {
 
     }
 
+
+    // run only once when component mounted
+    useEffect(() => { fetchData(); }, [songData, fetchData]);
+
+    const play = useCallback(() => {
+        console.log(wavesurferRef.current)
+        wavesurferRef.current.playPause();
+      }, []);
+
     if (musURL == '') {
 
-            await fetchData();
             return <div className="Player">Loading...</div>;
 
       }  else {
