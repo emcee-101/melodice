@@ -2,6 +2,7 @@ import {init as startupLyrics} from './api_lyrics/startup.js'
 import {init as startupMatcher} from './api_matcher/startup.js'
 import {init as startupAudio} from './api_audio/startup.js'
 import {init as startupPost} from './api_post_new/startup.js'
+import {init as startupGetFullData} from './api_get_full_data/startup.js'
 import {connectMongoose, clearDatabase} from './common_base/common.js'
 import {createNewTestSong} from './common_base/test.js'
 
@@ -13,3 +14,4 @@ startupLyrics()
 startupMatcher()
 startupAudio()
 startupPost()
+startupGetFullData()

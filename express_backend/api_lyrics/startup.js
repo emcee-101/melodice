@@ -1,6 +1,6 @@
 
-import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/common.js'
-import {handleLyricsRequest,testCase} from './main.js'
+import {initExpressServer} from '../common_base/common.js'
+import {handleLyricsRequest} from './main.js'
 
 // Some Method Signatures for Methods called here:
 //          initExpressServer(name, url_suffix, port, callback_function)
