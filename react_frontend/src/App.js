@@ -6,22 +6,27 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Header from "./components/Header";
 import OverviewRoot from './routes/overview/overviewRoot'
-
+import Play from './routes/play/play'
 
 
 function App() {
   return (
+    <>
+      <Router>
+          <Header/>
+          <Routes>
+            <Route path="/overview" element={<OverviewRoot />} />
+              
+            <Route path="/" element={<OverviewRoot />} />
 
-    <Router>
-        <Routes>
-          <Route path="/overview" element={<OverviewRoot />} />
+            <Route path="/play" element={<Play />} />
             
-          <Route path="/" element={<OverviewRoot />} />
-          
-        </Routes>
+          </Routes>
 
-    </Router>
+      </Router>
+    </>
   );
 }
 
