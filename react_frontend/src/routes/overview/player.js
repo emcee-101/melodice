@@ -6,7 +6,8 @@ import React, {
   } from "react";
 import styled from "styled-components";
 import { WaveSurfer, WaveForm } from "wavesurfer-react";
-import { standardFetch } from './util/fetch'
+import { standardFetch } from './util/fetch.js'
+import { IP, audio_service, matcher_service } from './util/config.js'
 
 
 const Buttons = styled.div`
@@ -55,7 +56,7 @@ export default function Player({index, songData = {_id: "bogus"}}) {
                 console.log("initial id: " + songData._id)
     
                 // testcase with no songinfos being passed 
-                answer1 = await standardFetch('http://localhost:10092/matcher/Mongoose', "GET")
+                answer1 = await standardFetch(IP + matcher_service + '/Mongoose', "GET")
               
                 id = answer1[0]._id
   
@@ -75,7 +76,7 @@ export default function Player({index, songData = {_id: "bogus"}}) {
 
             console.log("id: " + id)
 
-            answer2 = await standardFetch('http://localhost:10091/audio/' + id, "GET")
+            answer2 = await standardFetch(IP + audio_service + id, "GET")
 
             console.log("answer:" )
             console.log(answer2)

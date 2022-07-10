@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import SongElement from "./songElement.js"
 import { standardFetch } from "./util/fetch.js";
+import { IP, getfulldata_service } from "./util/config.js"
 
 
 export default function Overview({singleTrack = "false", requestedTrackID = null}) {
@@ -14,12 +15,12 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
 
         if ((singleTrack == "true") && (requestedTrackID)){
 
-            data = await standardFetch('http://localhost:10098/getfulldata/' + requestedTrackID, "GET");
+            data = await standardFetch(IP + getfulldata_service + requestedTrackID, "GET");
             
         } else {
         
             // gets all ID-entries for Songs in DB
-            data = await standardFetch('http://localhost:10098/getfulldata/', "GET");
+            data = await standardFetch(IP + getfulldata_service, "GET");
 
         }
 
