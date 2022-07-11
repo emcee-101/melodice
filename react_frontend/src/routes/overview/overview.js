@@ -14,7 +14,7 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
         let data = null;
 
         if ((singleTrack == "true") && (requestedTrackID)){
-
+            
             data = await standardFetch(IP + getfulldata_service + requestedTrackID, "GET");
             
         } else {
@@ -35,7 +35,7 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
     if(currentData == {}){
         return ( <div className="overview">Loading...</div> )
 
-    } else if (currentData[0]){
+    } else if (currentData[0]._id){
         return (
             <div className="overview">
                 
@@ -44,6 +44,7 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
                         // songElement gets ID from Array of IDs currentData which resembles all tracks in the Database
                         <SongElement
                             key={index}
+                            index={index+1}
                             songData={set}
                         />
                     
