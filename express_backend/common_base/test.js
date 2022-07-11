@@ -12,17 +12,14 @@ import {Song} from "./data_model.js";
 
     newSongs.forEach(async (element) => {
 
-      await element.save(function (err, track) {
+      element.save(function (err, track) {
 
-        if (err) console.log(err);
+        if (err) console.log(err)
+        else console.log(track)
 
         });
         
       }); 
-    
-      Song.find({}).lean().exec(function(err, docs) {
-        console.log(docs);
 
-    });
 
   };
