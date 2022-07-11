@@ -21,7 +21,8 @@ const Button = styled.button``;
 
 
 
-export default function Player({index, songData = {_id: "bogus"}}) {
+export default function Player({songData }) {
+
 
     const [musURL, updateMusicURL] = useState('');
     const wavesurferRef = useRef();
@@ -49,14 +50,16 @@ export default function Player({index, songData = {_id: "bogus"}}) {
         
         let id, answer1, answer2;
         
+
+
         try {
 
-            if (stateID == "bogus" || stateID){
+            if (stateID == "bogus" && stateID){
 
-                console.log("initial id: " + songData._id)
+                //console.log("initial id: " + songData._id)
     
                 // testcase with no songinfos being passed 
-                answer1 = await standardFetch(IP + matcher_service + '/Mongoose', "GET")
+                answer1 = await standardFetch(IP + matcher_service + 'Mongoose', "GET")
               
                 id = answer1[0]._id
   
@@ -64,7 +67,9 @@ export default function Player({index, songData = {_id: "bogus"}}) {
     
             } else if (stateID) {
     
-                id = stateID._id
+                console.log("took right path with id: " + stateID)
+
+                id = stateID
             
             } else {
     
@@ -78,8 +83,6 @@ export default function Player({index, songData = {_id: "bogus"}}) {
 
             answer2 = await standardFetch(IP + audio_service + id, "GET")
 
-            console.log("answer:" )
-            console.log(answer2)
 
             updateMusicURL(answer2.audiourl);
 
@@ -91,7 +94,7 @@ export default function Player({index, songData = {_id: "bogus"}}) {
 
 
     // run only once when component mounted
-    useEffect(() => { fetchData(songData._id); }, []);
+    useEffect(() => { console.log("ids:" + songData._id); fetchData(songData._id); }, []);
 
     const play = useCallback(() => {
         console.log(wavesurferRef.current)
