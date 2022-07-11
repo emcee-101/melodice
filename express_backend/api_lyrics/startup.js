@@ -1,6 +1,8 @@
 
-import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/common.js'
-import {handleLyricsRequest,testCase} from './main.js'
+import {initExpressServer} from '../common_base/common.js'
+import {handleLyricsRequest} from './main.js'
+import { LISTEN_PORT } from "./config.js";
+
 
 // Some Method Signatures for Methods called here:
 //          initExpressServer(name, url_suffix, port, callback_function)
@@ -11,6 +13,6 @@ import {handleLyricsRequest,testCase} from './main.js'
 export function init(){
     
     
-    initExpressServer('Lyrics', '/lyrics/:parameter', 10093, handleLyricsRequest);
+    initExpressServer('Lyrics', '/lyrics/:parameter', LISTEN_PORT, handleLyricsRequest);
 
     }

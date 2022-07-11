@@ -1,5 +1,5 @@
 import {Song} from "../common_base/data_model.js";
-
+import { IP, LISTEN_PORT } from "./config.js";
 
 
 export async function handleAudioRequests(req, res){
@@ -12,14 +12,14 @@ export async function handleAudioRequests(req, res){
             if (err){
                 console.log(err); 
                 res.status(404); 
-                res.send({})
+                res.send({message: "failed to find song with id" + req.params.parameter})
             }
             else {
                 res.status(200); 
 
                     //docs.audiofile is filename of requested document
 
-                res.send({audiourl: "http://localhost:10091/audio_files/" + docs.audiofile})
+                res.send({audiourl: `http://${IP}:${LISTEN_PORT}/audio_files/` + docs.audiofile})
 
             };
         }

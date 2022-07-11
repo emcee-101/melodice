@@ -1,6 +1,9 @@
 import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/common.js'
 import {requestPost} from './main.js'
 import express from 'express'
+import { LISTEN_PORT } from "./config.js";
+
+
 
 
 function postInitExpressServer(name, url_suffix, port, callback_function){
@@ -28,5 +31,5 @@ function postInitExpressServer(name, url_suffix, port, callback_function){
 
 export function init()
 {
-    postInitExpressServer('Poster', '/api_post_new', 10097, requestPost);
+    postInitExpressServer('Poster', '/api_post_new', LISTEN_PORT, requestPost);
 };
