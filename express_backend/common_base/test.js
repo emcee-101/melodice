@@ -10,7 +10,7 @@ import {Song} from "./data_model.js";
   
     let newSongs = [newSong1, newSong2]
 
-    newSongs.forEach(element => {
+    newSongs.forEach(async (element) => {
 
       await element.save(function (err, track) {
 
