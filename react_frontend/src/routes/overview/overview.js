@@ -35,7 +35,7 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
     if(currentData == {}){
         return ( <div className="overview">Loading...</div> )
 
-    } else if (currentData[0]){
+    } else if (currentData[0]._id){
         return (
             <div className="overview">
                 

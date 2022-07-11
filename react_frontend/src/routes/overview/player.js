@@ -21,8 +21,10 @@ const Button = styled.button``;
 
 
 
-export default function Player({songData }) {
+export default function Player({index, songData }) {
 
+    console.log("1st stop")
+    console.log(songData)
 
     const [musURL, updateMusicURL] = useState('');
     const wavesurferRef = useRef();
@@ -54,29 +56,19 @@ export default function Player({songData }) {
 
         try {
 
-            if (stateID == "bogus" && stateID){
+            if (stateID) {
 
-                //console.log("initial id: " + songData._id)
+                id=stateID
+     
+            } else {
+
+                console.log("took wrong path")
     
                 // testcase with no songinfos being passed 
                 answer1 = await standardFetch(IP + matcher_service + 'Mongoose', "GET")
               
                 id = answer1[0]._id
-  
-    
-    
-            } else if (stateID) {
-    
-                console.log("took right path with id: " + stateID)
 
-                id = stateID
-            
-            } else {
-    
-                console.log("stateID has a incorrect value")
-                console.log(stateID)
-                throw "error with StateID";
-    
             }
 
             console.log("id: " + id)
@@ -94,7 +86,7 @@ export default function Player({songData }) {
 
 
     // run only once when component mounted
-    useEffect(() => { console.log("ids:" + songData._id); fetchData(songData._id); }, []);
+    useEffect(() => { console.log("ids:" + songData._id + "   " + index); fetchData(songData._id); }, []);
 
     const play = useCallback(() => {
         console.log(wavesurferRef.current)
@@ -107,7 +99,7 @@ export default function Player({songData }) {
 
       }  else {
 
-            return (<div className="Player" >
+            return (<div className="Player" id={index} >
                         <WaveSurfer onMount={handleWSMount}>
                             <WaveForm id="waveform" cursorColor="transparent" />
                                 
