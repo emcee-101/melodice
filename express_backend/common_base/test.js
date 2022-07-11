@@ -14,15 +14,15 @@ import {Song} from "./data_model.js";
 
       await element.save(function (err, track) {
 
-        if (err) return console.error(err);
-        Song.find({}).lean().exec(function(err, docs) {
-              console.log(docs);
+        if (err) console.log(err);
 
-            });
-          }); 
+        });
+        
+      }); 
+    
+      Song.find({}).lean().exec(function(err, docs) {
+        console.log(docs);
 
     });
-
-
 
   };
