@@ -1,0 +1,35 @@
+    openapi: 3.0.0
+    info:
+      title: GetFullData API
+      description: 
+      version: 0.0.1
+    servers:
+      - url: http://localhost:10098
+        description: 
+      paths:
+      /getfulldata:
+        get:
+          summary: returns either all the songs from the DB or, when added a optional id-parameter, the full data of a single song
+          parameters:
+            - id: string
+              in: url
+              required: false
+              description: ID of Song
+          responses:
+            '200':    
+              description: Sucessfull Request
+              content:
+                application/json:
+                  schema: 
+                    _id: string
+                    name: string
+                    author: string
+                    type: enum['audio','lyrics','both']
+                    lyrics: string
+                    audiofile: string
+            '404':
+              description: Unsucessfully Request
+              content:
+                application/json:
+                  schema:
+                    message: string
