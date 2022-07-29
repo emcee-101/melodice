@@ -86,7 +86,7 @@ export default function Player({index, songData }) {
 
 
     // run only once when component mounted
-    useEffect(() => { console.log("ids:" + songData._id + "   " + index); fetchData(songData._id); }, []);
+    useEffect(() => { fetchData(songData._id) }, []);
 
     const play = useCallback(() => {
         console.log(wavesurferRef.current)

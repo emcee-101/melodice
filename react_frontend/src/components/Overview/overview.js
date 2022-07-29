@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import SongElement from "./songElement.js"
+import SongElement from "../SongElement/songElement.js"
 import { standardFetch } from "../../util/fetch.js";
 import { IP, getfulldata_service } from "../../util/config.js"
 

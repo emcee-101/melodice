@@ -1,5 +1,5 @@
 import React from "react";
-import Player from './player.js';
+import Player from '../Player/player.js';
 import Card from 'react-bootstrap/Card';
 
 export default function SongElement({index, songData={_id: "bogus"}}) {
