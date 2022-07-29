@@ -6,8 +6,8 @@ import React, {
   } from "react";
 import styled from "styled-components";
 import { WaveSurfer, WaveForm } from "wavesurfer-react";
-import { standardFetch } from './util/fetch.js'
-import { IP, audio_service, matcher_service } from './util/config.js'
+import { standardFetch } from '../../util/fetch.js'
+import { IP, audio_service, matcher_service } from '../../util/config.js'
 
 
 const Buttons = styled.div`

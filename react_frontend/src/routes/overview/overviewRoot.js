@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import Overview from './overview.js'
+import Overview from "../../components/Overview/overview.js";
+
 
 
 export default function OverviewRoot() {
