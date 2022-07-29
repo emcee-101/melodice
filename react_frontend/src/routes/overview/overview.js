@@ -7,6 +7,12 @@ import { IP, getfulldata_service } from "./util/config.js"
 
 export default function Overview({singleTrack = "false", requestedTrackID = null}) {
 
+    var style = {
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "justify-content": "center",
+        "align-items": "center"}
+
     const [currentData, setData] = useState([{}]);
 
     async function fetchData(){
@@ -37,7 +43,7 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
 
     } else if (currentData[0]._id){
         return (
-            <div className="overview">
+            <div className="overview" style={style}>
                 
                 {currentData.map((set, index) => (
                     

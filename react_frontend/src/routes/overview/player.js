@@ -93,6 +93,13 @@ export default function Player({index, songData }) {
         wavesurferRef.current.playPause();
       }, []);
 
+
+    var waveFormStyle = {
+        "width": "100%",  
+        "min-height": "8rem",
+        "padding": "0.5rem 0",
+      }
+
     if (musURL == '') {
 
             return <div className="Player" >Loading...</div>;
@@ -101,7 +108,7 @@ export default function Player({index, songData }) {
 
             return (<div className="Player" id={index} >
                         <WaveSurfer onMount={handleWSMount}>
-                            <WaveForm id="waveform" cursorColor="transparent" />
+                            <WaveForm style={waveFormStyle} id="waveform" cursorColor="transparent" />
                                 
                         </WaveSurfer>
                         <Buttons>
