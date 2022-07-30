@@ -13,23 +13,26 @@ import { IP, post_new_service, audio_service } from '../../util/config'
 export default function Save({parentData}){
 
     let style = {padding: "20px"}
-    let formData = {author: null, name: null, origauthor: null, origtitle: null}
+    let formData = {author: null, name: null, origauthor: null, origtitle: null, lyrics: null}
 
     const [isCover, setAsCover] = useState(false);
 
     function submit(){ /* use ParentData and formInput and Call fetch */
 
-        let data = {name: formData.name, author: formData.author};
-
+        let data = {name: formData.name, author: formData.author, typeOfPost: null, audiodata: null};
+//cover(isCover, also false oder true), audiodbid (id AudioDB), typeOfPost (audio, lyrics, both, add), type (audio, lyrics, both)
+//audiodata
         if (isCover) {
             data.DBID = dbID
         
 
-        if(data && data.author && data.name){
+        if(data && data.author && data.name && parentData){
             standardFetch(IP+post_new_service, 'POST', data)
-        }   
+            }   
         
 
+
+        }
 
     }
 
@@ -50,6 +53,14 @@ export default function Save({parentData}){
                             </InputGroup.Text>
                         <Form.Control
                             type="text" placeholder="Title" onChange={(event) => formData.name=event.target.value}
+                            aria-label="Name Of The Song"
+                        />  <br />
+                </InputGroup>
+                <InputGroup className="mb-3" controlId="lyrics" >                            
+                        <InputGroup.Text id="inputGroup-sizing-default">Lyrics of Song:
+                            </InputGroup.Text>
+                        <Form.Control
+                            type="text" placeholder="Lyrics" onChange={(event) => formData.lyrics=event.target.value}
                             aria-label="Name Of The Song"
                         />  <br />
                 </InputGroup>
