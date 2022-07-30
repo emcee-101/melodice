@@ -1,13 +1,29 @@
-import React, { useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router-dom"
-import {IP, ownPort} from "../../util/config"
+import {IP, ownPort, plannedIP} from "../../util/config"
+import { standardFetch } from "../../util/fetch"
  
 
 export default function LandingPage({match}){
 
-    const [parameters, setParameter] = useState(useParams())
+    let parameters = useParams()
+    const [id,setID] = useState(parameters.trackid)
 
-    function fetchFromAPIs(){}
+    const cache = useMemo(()=>{fetchFromAPIs(id)}, [id])
+    //useEffect(fetchFromAPIs(id), [])
+
+    async function fetchFromAPIs(givenID){
+        
+        let myURL, shortenAnswer, qrCodeAnswer;
+
+        if(givenID)
+            myURL = encodeURIComponent(plannedIP+ownPort+"landingpage/"+givenID    );
+            shortenAnswer = await standardFetch("http://194.94.204.27:10053/tools/shortenurl?url="+myURL,"GET",{},{})
+            qrCodeAnswer = await standardFetch("http://194.94.204.27:10053/tools/qrcode?message="+myURL,"GET",{},{})
+            console.log(shortenAnswer)
+            console.log(qrCodeAnswer)
+            console.log(myURL)
+    }
 
     return(
         <>

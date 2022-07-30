@@ -10,7 +10,7 @@ import { IP, post_new_service, rapid_api_audiodb_host } from '../../util/config'
 import { useNavigate } from "react-router-dom";
 
 
-  // gets passed the audio data (preferably in mp3 :) no, seriously :( ))
+  // gets passed the audio data (preferably in mp3 :)) also has standardvalue "Bogus"
 export default function Save({parentData={"audio": "Bogus"}}){
 
     let style = {padding: "20px"}

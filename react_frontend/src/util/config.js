@@ -1,4 +1,5 @@
 export var IP = "http://localhost";
+export var plannedIP = "http://194.94.204.27"
 export var ownPort = ":10094/";
 
 
