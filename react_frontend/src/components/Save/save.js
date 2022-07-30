@@ -9,7 +9,7 @@ import standardFetch from '../../util/fetch'
 import { IP, post_new_service, audio_service } from '../../util/config'
 
 
-  // gets passed the audio data (preferably in mp3)
+  // gets passed the audio data (preferably in mp3 :) no, seriously :( ))
 export default function Save({parentData}){
 
     let style = {padding: "20px"}
@@ -18,9 +18,14 @@ export default function Save({parentData}){
 
     const [isCover, setAsCover] = useState(false);
 
-    function checkEntries(){audioDBID = standardFetch("url", "GET")} // check for data corresponding to origtitle and origauthor in the audioDB
+    // check for data corresponding to origtitle and origauthor in the audioDB
+    function checkEntries(){
 
-    function submit(){ /* use ParentData and formInput and Call fetch */
+        audioDBID = standardFetch("url", "GET")
+    
+    } 
+
+    function submit(){ 
 
         let data = {
             name: formData.name,                    /*  String */

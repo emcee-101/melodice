@@ -1,9 +1,9 @@
-
+import {rapid_api_key} from "./config"
 
 // url  example: "http://localhost:10092/matcher/mongoose"
 // method example: "POST"
 
-export async function standardFetch(url, method='GET', data = {}){
+export async function standardFetch(url, method='GET', data = {}, additionalParams = {}){
 
     let config = {
         mode: 'cors',
@@ -16,6 +16,14 @@ export async function standardFetch(url, method='GET', data = {}){
 
     if((method=='POST'||method=='PUT') && (data))
         config.body = JSON.stringify(data);
+
+    if(additionalParams.specialCallType){
+        switch(additionalParams.specialCallType){
+            case("rapidapi"):
+                break;
+
+        }
+    }
     
     return fetch(url, config)
                         .then( (response) => { return response.json(); })
