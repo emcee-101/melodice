@@ -23,7 +23,7 @@ import fs from 'fs'
   
 
             // or http://194.94.204.27:10097/api_post_new
-  postData('http://194.94.204.27:10097/api_post_new', {name: 'test', typeOfPost: 'audio', type:'audio', author: 'bigjohn', audiodata: audioBuffer})
+  postData('http://localhost:10097/api_post_new', {name: 'test', typeOfPost: 'audio', type:'audio', author: 'bigjohn', audiodata: audioBuffer, cover: "false"})
     .then(data => {
       console.log(data); 
     });

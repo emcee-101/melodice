@@ -19,26 +19,29 @@ function getAudioDir(){
 }
 
 async function saveAudioFile(audioFileData, name){
-    
-    // buffer base64 received from request
-    const fileContents = Buffer.from(audioFileData, 'base64');
-    console.log(fileContents)
-    // find out corresponding filename for data to be written
-    const audioFileName = `${getAudioDir()}/${name}.mp3`;
-    console.log('audiofilename: '+audioFileName)
 
-    let fileNameToBeReferenced;
-    
-    fs.writeFile(audioFileName, fileContents, function(err) {
+    let fileNameToBeReferenced = "aaaaaaa";
 
-      if(err){console.log(err);}
-      else{
-      console.log(`file saved to ${audioFileName}`)
+    if(audioFileData!="Bogus"){
+        
+        // buffer base64 received from request
+        const fileContents = Buffer.from(audioFileData, 'base64');
+        console.log(fileContents)
+        // find out corresponding filename for data to be written
+        const audioFileName = `${getAudioDir()}/${name}.mp3`;
+        console.log('audiofilename: '+audioFileName);
 
-      fileNameToBeReferenced = name+'.mp3'
-      console.log(`the file will be noted in the db as the following name: ${fileNameToBeReferenced}`)
-        }
-    });
+        fs.writeFile(audioFileName, fileContents, function(err) {
+
+        if(err){console.log(err);}
+        else{
+            console.log(`file saved to ${audioFileName}`)
+
+            fileNameToBeReferenced = name+'.mp3'
+            console.log(`the file will be noted in the db as the following name: ${fileNameToBeReferenced}`)
+            }
+        });
+    }
 
     return fileNameToBeReferenced
 
@@ -48,35 +51,35 @@ export async function requestPost(req, res){
 
     console.log(req.body.name)
 
-    let song = new Song({name: req.body.name, type: req.body.type, author: req.body.author})
+    let songData = {name: req.body.name, type: req.body.type, author: req.body.author}
     let resMessage='';
-    let song2 = {};
+    let intermediateSong = null;
 
     switch(req.body.typeOfPost){
         // add new Song in DB with only lyrics
         case 'lyrics':
-            song.lyrics = req.body.lyrics;
+            songData.lyrics = req.body.lyrics;
             break;
         
         // add new Song in DB with only audio
         case 'audio':
             saveAudioFile(req.body.audiodata, req.body.name)
-            song.audiofile = req.body.name+'.mp3'
-            console.log(song)
+            songData.audiofile = req.body.name+'.mp3'
+            console.log(songData)
             break;
         
         // add new Song in DB with both
         case 'both':
             saveAudioFile(req.body.audiodata, req.body.name)
-            song.audiofile = req.body.name+'.mp3'
-            song.lyrics = req.body.lyrics
+            songData.audiofile = req.body.name+'.mp3'
+            songData.lyrics = req.body.lyrics
             break;
 
         // add either lyrics or audio to a already existing song
         case 'add':
             
             // find corresponding song
-            Song.findOne({_id: req.body.id}, (err,song3)=>{
+            Song.findOne({_id: req.body.id}, (err,tempSong)=>{
 
                 if(err){
                     console.log('document not found');
@@ -87,18 +90,18 @@ export async function requestPost(req, res){
                     switch(req.body.addType){
 
                         case 'addLyrics':
-                            song3.lyrics = req.body.lyrics;
+                            tempSong.lyrics = req.body.lyrics;
                             break;
         
                         case 'addAudio':
                             saveAudioFile(req.body.audiodata, req.body.name)
-                            .then(song3.audiofile = req.body.name+'.mp3')
+                            .then(tempSong.audiofile = req.body.name+'.mp3')
                             break;
                         
                     }
                     
-                    song3.type = 'both';
-                    song2 = song3;
+                    tempSong.type = 'both';
+                    intermediateSong = tempSong;
 
                 }
             })
@@ -111,16 +114,19 @@ export async function requestPost(req, res){
         // check if song was marked as a cover on creation 
         // if that is the case add the ID of its entry in the audioDB that was selected on creation
         if(req.body.cover && (req.body.cover == "true")){
-            song.cover = "true";
-            song.audiodbid = req.body.audiodbid;
+            songData.cover = "true";
+            songData.audiodbid = req.body.audiodbid;
         } else {
-            song.cover = "false";
+            songData.cover = "false";
         }
 
 
-        if (song2 != {}) song = song2;
+        if (intermediateSong) songData = intermediateSong;
         
-        song.save((err, doc)=>{
+        console.log(songData)
+        let finalObjectSong = new Song(songData);
+        console.log(finalObjectSong)
+        finalObjectSong.save((err, doc)=>{
             
             if(err){
                 console.log("wäh wäh wäh")

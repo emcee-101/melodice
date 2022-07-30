@@ -2,6 +2,7 @@ import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/co
 import {requestPost} from './main.js'
 import express from 'express'
 import { LISTEN_PORT } from "./config.js";
+import cors from "cors"
 
 
 
@@ -9,6 +10,8 @@ import { LISTEN_PORT } from "./config.js";
 function postInitExpressServer(name, url_suffix, port, callback_function){
 
     const app = express();
+
+    app.use(cors());
     
     // Parse URL-encoded bodies (as sent by HTML forms)
     app.use(express.urlencoded({limit: '50mb'}));

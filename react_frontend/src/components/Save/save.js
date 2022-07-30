@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 
   // gets passed the audio data (preferably in mp3 :) no, seriously :( ))
-export default function Save({parentData="Bogus"}){
+export default function Save({parentData={"audio": "Bogus"}}){
 
     let style = {padding: "20px"}
     let formData = {author: null, name: null, origauthor: null, origtitle: null, lyrics: null}
@@ -48,7 +48,8 @@ export default function Save({parentData="Bogus"}){
 
         if (isCover) {
             data.audiodbid = audioDBID }            /*  String */
-        
+        console.log(data)
+
             // validation missing
         if(data && data.author && data.name && data.audiodata && data.cover){
 
