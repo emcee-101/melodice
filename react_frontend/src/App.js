@@ -9,6 +9,7 @@ import {
 import Header from "./components/Header";
 import OverviewRoot from './routes/overview/overviewRoot'
 import Play from './routes/play/play'
+import Save from './components/Save/save'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -29,6 +30,8 @@ function App() {
             <Route path="/" element={<OverviewRoot />} />
 
             <Route path="/play" element={<Play />} />
+
+            <Route path="/save" element={<Save />} />
             
           </Routes>
 

@@ -10,7 +10,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 
   // gets passed the audio data (preferably in mp3)
-export function save({parentData}){
+export default function Save({parentData}){
 
     const [isCover, setAsCover] = useState(false);
 
