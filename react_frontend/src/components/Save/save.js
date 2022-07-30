@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import standardFetch from '../../util/fetch'
-import { IP, post_new_service, audio_service } from '../../util/config'
+import { IP, post_new_service, rapid_api_audiodb_host } from '../../util/config'
 
 
   // gets passed the audio data (preferably in mp3 :) no, seriously :( ))
@@ -21,16 +21,18 @@ export default function Save({parentData}){
     // check for data corresponding to origtitle and origauthor in the audioDB
     function checkEntries(){
 
-        audioDBID = standardFetch("url", "GET")
-    
+        audioDBresponse = standardFetch(`https://theaudiodb.p.rapidapi.com/searchtrack.php?s=${origauthor}&t=${origtitle}`, "GET", {type: "rapidapi", rapid_api_host: rapid_api_audiodb_host})
+        // do something...
+
     } 
 
+    // submit to db
     function submit(){ 
 
         let data = {
             name: formData.name,                    /*  String */
             author: formData.author,                /*  String */
-            lyrics: formData.lyrics,                /*  String */
+            lyrics: formData.lyrics,                /*  String */                       /* typescript next time :_-) */
             typeOfPost: null,                       /*  audio, lyrics, add, both */
             type: null,                             /*  audio,lyrics, both */
             audiodata: parentData.audio,            /*  binary data */
@@ -38,7 +40,7 @@ export default function Save({parentData}){
                         
 
         if (isCover) {
-            data.audiodbid = audioDBID }
+            data.audiodbid = audioDBID }            /*  String */
         
 
         if(data && data.author && data.name && data.audiodata && data.cover){
