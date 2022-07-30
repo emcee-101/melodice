@@ -5,13 +5,13 @@ import React, {
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import standardFetch from '../../util/fetch'
+import { standardFetch } from '../../util/fetch'
 import { IP, post_new_service, rapid_api_audiodb_host } from '../../util/config'
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
   // gets passed the audio data (preferably in mp3 :) no, seriously :( ))
-export default function Save({parentData}){
+export default function Save({parentData="Bogus"}){
 
     let style = {padding: "20px"}
     let formData = {author: null, name: null, origauthor: null, origtitle: null, lyrics: null}
@@ -19,23 +19,22 @@ export default function Save({parentData}){
 
     const [isCover, setAsCover] = useState(false);
     const [audioDBEntries, setAudioDBEntries] = useState({});       /* <--- this is for when there is a selection like which one is it? */
-    let history = useHistory();
-
-    useEffect(()=>{/* redirect to landing page (or make it visible) with redirectID as prop */},[setRedirectID])
+    let navigation = useNavigate();
 
     // check for data corresponding to origtitle and origauthor in the audioDB
-    function checkEntriesAudioDB(){
+    async function checkEntriesAudioDB(){
 
-        audioDBresponse = standardFetch(`https://theaudiodb.p.rapidapi.com/searchtrack.php?s=${origauthor}&t=${origtitle}`, "GET", {type: "rapidapi", rapid_api_host: rapid_api_audiodb_host})
+        let audioDBresponse = await standardFetch(`https://theaudiodb.p.rapidapi.com/searchtrack.php?s=${formData.origauthor}&t=${formData.origtitle}`, "GET",{}, {type: "rapidapi", rapid_api_host: rapid_api_audiodb_host})
         
         //selects first match as fitting one that gets added to db... please add logic, so that this can be chosen on screen
         if(!audioDBresponse.message){audioDBID = audioDBresponse.track[0].idTrack} 
-
+        console.log("message:" + audioDBresponse.message)
+        console.log(audioDBresponse)
         //setAudioDBEntries = audioDBresponse
     } 
 
     // submit to db
-    function submit(){ 
+    async function submit(){ 
 
         let data = {
             name: formData.name,                    /*  String */
@@ -60,15 +59,17 @@ export default function Save({parentData}){
                 data.type = "audio"
                 data.typeOfPost = "audio"
             }
+            console.log(data)
+            console.log(data.audiodata)
             
-            let result = standardFetch(IP+post_new_service, 'POST', data)
+            let result = await standardFetch(IP+post_new_service, 'POST', data,{})
 
             console.log(result.message)
             
             // refer to LandingPage if sucessfully pushed to DB
-            if(result._id) {
-                history.push("/landingpage?trackid=" + result._id);
-            }
+            /*if(result._id) {
+                navigation("/landingpage?trackid=" + result._id);
+            }*/
         
         }   
     }
@@ -76,7 +77,7 @@ export default function Save({parentData}){
     console.log(isCover + "RENDER TRIGGERED")
 
     return <>
-            <Form onSubmit={submit()} id="saveForm" style={style}>
+            <Form id="saveForm" style={style}>
                 
                 <InputGroup className="mb-3" controlId="author" >
                         <InputGroup.Text id="inputGroup-sizing-default">Your Name:
@@ -158,7 +159,7 @@ export default function Save({parentData}){
 
                 <br />
 
-                <Button variant="primary" type="submit">Submit</Button>{' '}
+                <Button variant="primary" onClick={submit}>Submit</Button>{' '}
             </Form>
         </>
 

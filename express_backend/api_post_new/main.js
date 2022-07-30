@@ -123,6 +123,7 @@ export async function requestPost(req, res){
         song.save((err, doc)=>{
             
             if(err){
+                console.log("wäh wäh wäh")
                 res.status(400).send({message: resMessage+'saving song unsucessful'});
             }
             else{

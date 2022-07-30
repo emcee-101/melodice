@@ -5,14 +5,16 @@ import {IP, ownPort} from "../../util/config"
 
 export default function LandingPage({}){
 
-    const [parameters, setParameter] = useState(useParams())
+    const [parameters, setParameter] = useState(null)
+
+    setParameter(useParams());
 
     function fetchFromAPIs(){}
 
     return(
         <>
 
-            <p>Your Song was created: {parameter.trackid}, Link should be {IP+ownPort+"overview?track="+parameter.trackid}</p>
+            <p>Your Song was created: {parameters.trackid}, Link should be {IP+ownPort+"overview?track="+parameters.trackid}</p>
         
         </>
     )
