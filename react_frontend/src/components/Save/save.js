@@ -12,7 +12,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
   // gets passed the audio data (preferably in mp3)
 export function save({parentData}){
 
-    const [isCover, setAsCover] = useState('false');
+    const [isCover, setAsCover] = useState(false);
 
     useEffect(()=>{/*  code to make components visible that make input of original data possible */},[isCover]);
 
@@ -20,27 +20,42 @@ export function save({parentData}){
 
     return <>
             <form onsubmit={submit()}>
-                <Button variant="outline-primary" type="input" onClick={()=>{if(isCover!='false')setAsCover('false');else setAsCover('true')}}>
-                    {isCover}
+                <Button variant="outline-primary" type="input" onClick={()=>{isCover ? setAsCover(false) : setAsCover(true)}}>
+                    { isCover.toString() }
                 </Button>{' '}
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-3" id="generalData">
                         <InputGroup.Text id="inputGroup-sizing-default">
-                            Your Name
-                        </InputGroup.Text>
+                            </InputGroup.Text>
                         <Form.Control
-                        aria-label="Default"
-                        aria-describedby="inputGroup-sizing-default"
-                    />
+                            aria-label="Your Name"
+                            aria-describedby="inputGroup-sizing-default"
+                        />
                 
-                    <InputGroup.Text id="inputGroup-sizing-default">
-                            Name Of The Song
-                        </InputGroup.Text>
+                        <InputGroup.Text id="inputGroup-sizing-default">
+                            </InputGroup.Text>
                         <Form.Control
-                        aria-label="Default"
-                        aria-describedby="inputGroup-sizing-default"
-                    />
+                            aria-label="Name Of The Song"
+                            aria-describedby="inputGroup-sizing-default"
+                        />
                 </InputGroup>
-                <Button variant="primary" type="submit" onClick={submit()}>Submit</Button>{' '}
+
+                <InputGroup className="mb-3" id="coverData" style={{ visibility: isCover ? "visible" : "hidden" }}>
+                        <InputGroup.Text id="inputGroup-sizing-default">
+                            </InputGroup.Text>
+                        <Form.Control
+                            aria-label="Original Song Name"
+                            aria-describedby="inputGroup-sizing-default"
+                        />
+                
+                        <InputGroup.Text id="inputGroup-sizing-default">
+                            </InputGroup.Text>
+                        <Form.Control
+                            aria-label="Original Song Author"
+                            aria-describedby="inputGroup-sizing-default"
+                        />
+                </InputGroup>
+
+                <Button variant="primary" type="submit">Submit</Button>{' '}
             </form>
         </>
 
