@@ -14,26 +14,41 @@ export default function Save({parentData}){
 
     let style = {padding: "20px"}
     let formData = {author: null, name: null, origauthor: null, origtitle: null, lyrics: null}
+    let audioDBID = null
 
     const [isCover, setAsCover] = useState(false);
 
+    function checkEntries(){audioDBID = standardFetch("url", "GET")} // check for data corresponding to origtitle and origauthor in the audioDB
+
     function submit(){ /* use ParentData and formInput and Call fetch */
 
-        let data = {name: formData.name, author: formData.author, typeOfPost: null, audiodata: null};
-//cover(isCover, also false oder true), audiodbid (id AudioDB), typeOfPost (audio, lyrics, both, add), type (audio, lyrics, both)
-//audiodata
+        let data = {
+            name: formData.name,                    /*  String */
+            author: formData.author,                /*  String */
+            lyrics: formData.lyrics,                /*  String */
+            typeOfPost: null,                       /*  audio, lyrics, add, both */
+            type: null,                             /*  audio,lyrics, both */
+            audiodata: parentData.audio,            /*  binary data */
+            cover: isCover.toString()};             /*  true, false */
+                        
+
         if (isCover) {
-            data.DBID = dbID
+            data.audiodbid = audioDBID }
         
 
-        if(data && data.author && data.name && parentData){
+        if(data && data.author && data.name && data.audiodata && data.cover){
+
+            if (data.lyrics){
+                data.type = "both"
+                data.typeOfPost = "both"
+            } else {
+                data.type = "audio"
+                data.typeOfPost = "both"
+            }
+            
             standardFetch(IP+post_new_service, 'POST', data)
+
             }   
-        
-
-
-        }
-
     }
 
     console.log(isCover + "RENDER TRIGGERED")
@@ -90,6 +105,12 @@ export default function Save({parentData}){
                                 aria-label="Original Song Name"
                             />  <br />
                 </InputGroup>                            <br />
+                
+                <Button variant="outline-primary" onClick={checkEntries}>
+                    Check for AudioDB-Entries!
+                </Button>{' '}<br />
+
+                <br />
 
                 <Button variant="primary" type="submit">Submit</Button>{' '}
             </Form>
