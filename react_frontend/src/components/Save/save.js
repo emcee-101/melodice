@@ -68,9 +68,9 @@ export default function Save({parentData={"audio": "Bogus"}}){
             console.log(result.message)
             
             // refer to LandingPage if sucessfully pushed to DB
-            /*if(result._id) {
-                navigation("/landingpage?trackid=" + result._id);
-            }*/
+            if(result._id) {
+                navigation("/landingpage/" + result._id);
+            }
         
         }   
     }
