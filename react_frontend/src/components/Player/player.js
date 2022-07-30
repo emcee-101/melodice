@@ -23,8 +23,6 @@ const Button = styled.button``;
 
 export default function Player({index, songData }) {
 
-    console.log("1st stop")
-    console.log(songData)
 
     const [musURL, updateMusicURL] = useState('');
     const wavesurferRef = useRef();

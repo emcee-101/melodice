@@ -1,12 +1,13 @@
 import React, {
-    useEffect,
     useState,
+    useEffect
   } from "react";
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import standardFetch from '../../util/fetch'
 import { IP, post_new_service, rapid_api_audiodb_host } from '../../util/config'
+import { useHistory } from "react-router-dom";
 
 
   // gets passed the audio data (preferably in mp3 :) no, seriously :( ))
@@ -17,7 +18,10 @@ export default function Save({parentData}){
     let audioDBID = null
 
     const [isCover, setAsCover] = useState(false);
-    //const [audioDBEntries, setAudioDBEntries] = useState({});
+    const [audioDBEntries, setAudioDBEntries] = useState({});       /* <--- this is for when there is a selection like which one is it? */
+    let history = useHistory();
+
+    useEffect(()=>{/* redirect to landing page (or make it visible) with redirectID as prop */},[setRedirectID])
 
     // check for data corresponding to origtitle and origauthor in the audioDB
     function checkEntriesAudioDB(){
@@ -46,7 +50,7 @@ export default function Save({parentData}){
         if (isCover) {
             data.audiodbid = audioDBID }            /*  String */
         
-
+            // validation missing
         if(data && data.author && data.name && data.audiodata && data.cover){
 
             if (data.lyrics){
@@ -57,9 +61,16 @@ export default function Save({parentData}){
                 data.typeOfPost = "audio"
             }
             
-            standardFetch(IP+post_new_service, 'POST', data)
+            let result = standardFetch(IP+post_new_service, 'POST', data)
 
-            }   
+            console.log(result.message)
+            
+            // refer to LandingPage if sucessfully pushed to DB
+            if(result._id) {
+                history.push("/landingpage?trackid=" + result._id);
+            }
+        
+        }   
     }
 
     console.log(isCover + "RENDER TRIGGERED")

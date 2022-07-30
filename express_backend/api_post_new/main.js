@@ -128,7 +128,7 @@ export async function requestPost(req, res){
             else{
                 console.log('correctly saved document:')
                 console.log(doc)
-                res.status(200).send({message: resMessage+'saving song sucessful'});
+                res.status(200).send({message: resMessage+'saving song sucessful', _id: doc._id});
             }
         })
 
