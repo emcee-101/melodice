@@ -63,7 +63,7 @@ export async function handleAudioRequests(req, res){
                 else {; 
                     
                     if (docs.type != "lyrics"){
-                        /*
+                        /*              Working code for chopping up mp3
                         const srcFilePath = filepath + docs.audiofile
                         const resultFileName = docs._id+".mp3"
                         const resultFilePath = filepath + resultFileName

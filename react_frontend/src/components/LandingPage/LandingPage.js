@@ -17,7 +17,7 @@ export default function LandingPage(){
 
 
 
-
+    // not working
     async function findWithShazam(data){
 
         let audioBuffer = Buffer.from(data, 'binary').toString('base64')
@@ -38,6 +38,7 @@ export default function LandingPage(){
         }
     }
 
+        // not set up for mp3
     async function getAudioCut(){
         let audioResponse
 
@@ -60,6 +61,7 @@ export default function LandingPage(){
 
     }
 
+    // can get img but is not yet displayed on site
     async function renderQR(){
         console.log("qrurl")
 
@@ -78,6 +80,7 @@ export default function LandingPage(){
             else console.log(" hallo ")
     }
 
+    // works
     async function fetchFromAPIs(givenID){
         
         let myURL, shortenAnswer, qrCodeAnswer;
@@ -104,9 +107,10 @@ export default function LandingPage(){
             <p>Your Song was created under the id: {parameters.trackid}, Link should be {IP+ownPort+"overview/?trackid="+parameters.trackid}</p><br />
             <a href={fetchyData[1].data.newUrl} style={{ visibility: fetchyStatus ? "visible" : "hidden" }}> Shortened Link: {fetchyData[1].data.newUrl} </a >
 
-            {/* convert base64 qrcode data to a blob and get a link for that and refer the user to that link */}
+            {/* does not work */}
             <button onClick={()=>{let url=renderQR(); navigation(url)}} style={{ visibility: fetchyStatus ? "visible" : "hidden" }}>Display QR Code for your Song</button>
 
+            {/* does not work */}
             <code style={{ visibility: fetchyStatus ? "visible" : "hidden" }}>
                 {()=>{if(foundStatus == "false"){return "file is being searched by shazam"} else if(foundStatus=="notfound"){return "Your Youtube Ad revenue is safe :)"} else {return "Oh no, your audio will be flagged :("}}}
             </code >
