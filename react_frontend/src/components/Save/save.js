@@ -50,20 +50,25 @@ export default function Save({parentData={"audio": "Bogus"}}){
             cover: isCover.toString()};             /*  true, false */
                         
 
-        if (isCover && audioDBID) {
-            data.audiodbid = audioDBID              /*  String */ 
+        if ((isCover && audioDBID)||(!isCover && (audioDBID==null))) {
+            
+            
+            if(isCover) data.audiodbid = audioDBID;              /*  String */ 
 
 
             console.log(data)
 
-            if(data && (data.author&&(data.author!="")) && (data.name&&(data.name!="")) && data.audiodata && data.cover){
+            if(data && (data.author&&(data.author!="")) && (data.name&&(data.name!="")) && data.cover){
     
-                if (data.lyrics){
+                if (data.lyrics && (data.audiodata!="Bogus") && data.audiodata){
                     data.type = "both"
                     data.typeOfPost = "both"
-                } else {
+                } else if ((data.audiodata!="Bogus") && data.audiodata) {
                     data.type = "audio"
                     data.typeOfPost = "audio"
+                } else {
+                    data.type = "lyrics"
+                    data.typeOfPost = "lyrics"
                 }
                 console.log(data)
                 console.log(data.audiodata)

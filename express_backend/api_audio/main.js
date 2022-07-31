@@ -60,22 +60,27 @@ export async function handleAudioRequests(req, res){
                     res.status(404); 
                     res.send({message: "failed to find song with id" + req.params.parameter})
                 }
-                else {
-                    res.status(200); 
+                else {; 
+                    
+                    if (docs.type != "lyrics"){
 
+                        const srcFilePath = filepath + docs.audiofile
+                        const resultFileName = docs._id+".mp3"
+                        const resultFilePath = filepath + resultFileName
 
-                    const srcFilePath = filepath + docs.audiofile
-                    const resultFileName = docs._id+".mp3"
-                    const resultFilePath = filepath + resultFileName
+                            //docs.audiofile is filename of requested document
+                        MP3Cutter.cut({src:  srcFilePath  ,
+                                    target: resultFilePath ,
+                                    start: 1,
+                                    end: 4})
+                        
+                        res.status(200)
+                        res.send({audiourl: `http://${IP}:${LISTEN_PORT}/audio_files/` + resultFileName})
+                    }
 
-                        //docs.audiofile is filename of requested document
-                    MP3Cutter.cut({src:  srcFilePath  ,
-                                target: resultFilePath ,
-                                start: 1,
-                                end: 4})
-
-                    res.send({audiourl: `http://${IP}:${LISTEN_PORT}/audio_files/` + resultFileName})
-
+                    else {
+                        res.status(404)
+                        res.send({message: "this is not a track with a associated audiofile :/"})   }
                 };
             }
         );

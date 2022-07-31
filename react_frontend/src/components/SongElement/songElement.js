@@ -29,7 +29,7 @@ export default function SongElement({index, songData={_id: "bogus"}}) {
     useEffect(()=>{fetchMetadata()},[])
 
 
-    if(dbData.idAlbum){
+    if(dbData){
 
         return (
                 <Card>
