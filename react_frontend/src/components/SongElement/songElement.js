@@ -1,24 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import Player from '../Player/player.js';
 import Card from 'react-bootstrap/Card';
 
 export default function SongElement({index, songData={_id: "bogus"}}) {
 
-    
+    const [dbData, setdbData] = useState(null)
 
-    return (
-        <Card>
-            <Card.Body>            
-                <Player 
-                    index = {index} 
-                    songData = {{_id: songData._id}}/>
-            </Card.Body>
-            <Card.Footer>
-                Title: {songData.name}
-                Artist: {songData.author}
-            </Card.Footer>
-        </Card>
-    );
+    let lyrics = ""
+    if (songData.lyrics) lyrics = "Lyrics: "+songData.lyrics
+
+
+
+    async function fetchMetadata(){
+
+        let audioDBresponse
+
+        if(songData.audiodbtrackid)
+            audioDBresponse = await standardFetch(`https://theaudiodb.p.rapidapi.com/track.php?h=${songData.audiodbtrackid}`, "GET",{}, {type: "rapidapi", rapid_api_host: rapid_api_audiodb_host});
+
+        if(!audioDBresponse.message && audioDBresponse.track[0].idAlbum)
+            setdbData(audioDBresponse.track[0])
+
+    }
+
+    useEffect(()=>{fetchMetadata()},[])
+
+
+    if(dbData.idAlbum){
+
+        return (
+                <Card>
+                    <Card.Body>            
+                        <Player 
+                            index = {index} 
+                            songData = {{_id: songData._id}}/>
+                    </Card.Body>
+                    <Card.Footer>
+                        Title: {songData.name}
+                        Artist: {songData.author}
+                        {lyrics}
+                        Original Author: {dbData.strArtist}
+                        Original Title: {dbData.strTrack}
+                        Original Album: {dbData.strAlbum}
+                    </Card.Footer>
+                </Card>
+                )
+
+    } else {
+
+
+        return (
+            <Card>
+                <Card.Body>            
+                    <Player 
+                        index = {index} 
+                        songData = {{_id: songData._id}}/>
+                </Card.Body>
+                <Card.Footer>
+                    Title: {songData.name}
+                    Artist: {songData.author}
+                    {lyrics}
+                </Card.Footer>
+            </Card>
+        )}
 }
 
 
