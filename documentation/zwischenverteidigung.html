@@ -14,23 +14,43 @@
     </style>
   </head>
   <body>
-    <h1>Inhalt</h1><br><br>
+    <h2>Externe Dateien</h2><br><br>
     <a href="rest_api_intern.html">Dokumentation der angebotenen APIs</a><br>
     <a href="rest_api_internet.html">Dokumentation der konsumierten APIs</a><br>
     <a href="./presentations/zwischenpraesentation_melodice.pdf">Präsentation des geplanten Service</a><br>
     <a href="./presentations/endpraesentation_melodice.pdf">Präsentation des geplanten Service</a><br>
     <br>
     <a href="https://git.ai.fh-erfurt.de/team-melodice/ss2022_wa_melodice/-/tree/main/documentation/api">Dokumentation in OpenAPI Format im GIT</a><br>
+  <br>  <br>
+
+    <h2>Stand des Projektes und Selbsteinschätzung durhc Niklas:</h2>
+    <p>Es ist uns leider nicht gelungen alle Ideen und Elemente umzusetzen die wir uns wünschten. Auch sind einige der Vorhandenen Sachen verbuggt.
+      Funktional ist die Darstellung aller Songs in der DB, das Keyboard, wofür wir aktuell eine Library nutzen (siehe Quellen), der Header, die APIs und die Datenbank.
+      API Calls an "theaudiodb" funktionieren Ebenfalls. Die vorgesehenen API Calls an die API des Teams "Goodquestion" funktionieren, wir hatten aber Probleme mit der Darstellung in React.
+      Die Funktionalität aber ist einsehbar in der Komponente "landingpage" in der Console, da ein logging der Ergebnisse eingestellt ist.
+      Der Ebengenannte Call an die audiodb ist in der Komponente "save". Beide sind erreichbar durch eigene Routen, die allerdings nicht zum manuellen Aufruf vorgesehen waren.
+      Die Routen sind zum späteren Planmäßigen Aufruf durch andere Komponenten, sowie zum Debugging.<br>
+      Die URLs sind: "ADRESSE_FRONTEND/save" und "ADRESSE_FRONTEND/landingpage/?trackid=DBID".<br>
+      Das korrekte Speichern von Metadaten ist mit Save möglich und die weiterleitung auf die LandingPage funktioniert auch.
+      Die Hierarchie von "overviewRoot"->"overview"->"songelement"->"player" klappt ebenfalls.<br>
+      <br>
+      In der handleAudioRequests-Funktion des Backend Services Audio (main.js) findet sich ausserdem am unteren Ende auskommentierter Code, der eine MP3-Datei zuschneidet, damit sie nicht zu lang für die Shazam API ist.
+      Diese können wir nun nicht mehr nutzen, da wir zu spät den Rekorder einstellten, der ja Audio vom Keyboard aufnimmt.
+      In der Frontend-Komponente "landingpage" findet sich dazu das Gegenstück, dass dann Shazam callen sollte. Der Code existiert, funktioniert aber noch nicht. 
+      Auch Links zu einzelnen Songs funktionieren nicht.
+      Letzenendes hatte es bei uns glaube Ich hauptsächlich an Zeit und einem guten Plan zur Umsetzung gemangelt, da wir vieles Überstürzt angegangen sind und anderes dann erst viel zu spät geklärt haben.
+      Das Projekt hat noch einige schwächen an meinem Vorgehen aufgezeigt, an denen Ich weiterhin arbeiten möchte.
+    </p>
 
     <br><br>
-    Wireframes:<br>
+    <h2>Wireframes:</h2><br>
     <img src="./wireframes/wireframe_uebersicht.drawio.png" /><br>
     <img src="./wireframes/wireframe_overview_components.drawio.png" />
 
     <br><br>
-    DB Schema:<br>
+  <h2>DB Schema:</h2><br>
     <img src="./db/db.jpg">
-
-
+    <br>
+  <h2>DB Schema:</h2><br>
   </body>
 </html>
