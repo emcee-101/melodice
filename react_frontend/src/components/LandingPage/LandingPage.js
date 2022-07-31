@@ -12,7 +12,7 @@ export default function LandingPage(){
 
     let navigation = useNavigate();
     const [foundStatus,setfoundStatus] = useState("false")
-    let fetchyData = [0,0,0]
+    let fetchyData = [0,{data:{newUrl: "null"}},0]
     
 
 
@@ -71,7 +71,7 @@ export default function LandingPage(){
                                     .then(res => res.blob())
                                     .then((res) => {return res});
                 console.log(converted)
-                let qrurl = URL.createObjectURL(converted.slice(0, converted.size, "application/pdf"))
+                let qrurl = URL.createObjectURL(converted)
                 console.log(qrurl)
             return qrurl}
 
@@ -83,7 +83,7 @@ export default function LandingPage(){
         let myURL, shortenAnswer, qrCodeAnswer;
 
         if(givenID)
-            myURL = encodeURIComponent(plannedIP+ownPort+"landingpage/"+givenID    );
+            myURL = encodeURIComponent(plannedIP+ownPort+"landingpage/?trackid="+givenID    );
             shortenAnswer = await standardFetch("http://194.94.204.27:10053/tools/shortenurl?url="+myURL,"GET",{},{})
             qrCodeAnswer = await standardFetch("http://194.94.204.27:10053/tools/qrcode?message="+myURL,"GET",{},{})
             console.log(shortenAnswer)
@@ -101,7 +101,7 @@ export default function LandingPage(){
     
 
         return (<div>
-            <p>Your Song was created under the id: {parameters.trackid}, Link should be {IP+ownPort+"overview?track="+parameters.trackid}</p><br />
+            <p>Your Song was created under the id: {parameters.trackid}, Link should be {IP+ownPort+"overview/?trackid="+parameters.trackid}</p><br />
             <a href={fetchyData[1].data.newUrl} style={{ visibility: fetchyStatus ? "visible" : "hidden" }}> Shortened Link: {fetchyData[1].data.newUrl} </a >
 
             {/* convert base64 qrcode data to a blob and get a link for that and refer the user to that link */}

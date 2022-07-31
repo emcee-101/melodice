@@ -32,16 +32,19 @@ export default function SongElement({index, songData={_id: "bogus"}}) {
 
         return (
                 <div className="card">
+                   
                         <Player 
                             index = {index} 
                             songData = {{_id: songData._id}}/>
                     <div class="container">   
-                        <h4><b>{songData.name}</b></h4>                      
-                        <p>Artist: {songData.author}</p> 
-                        <p>{lyrics}</p>
-                        Original Author: {dbData.strArtist}
-                        Original Title: {dbData.strTrack}
-                        Original Album: {dbData.strAlbum}
+                        <ul>
+                        <li><h4><b>{songData.name}</b></h4></li>                      
+                        <li><p>Artist: {songData.author}</p> </li>
+                        <li><p>{lyrics}</p></li>
+                        <li>Original Author: {dbData.strArtist}</li>
+                        <li>Original Title: {dbData.strTrack}</li>
+                        <li>Original Album: {dbData.strAlbum}</li>
+                        </ul>
                     </div>
                 </div>
                 )

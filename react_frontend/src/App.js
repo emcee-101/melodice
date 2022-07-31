@@ -20,9 +20,10 @@ function App() {
       <Router>
           <Header/>
           <Routes>
+
             <Route path="/overview" element={<OverviewRoot />} />
               
-            <Route path="/overview/:trackid" element={<OverviewRoot />} />
+            <Route path="/overview/:trackid?" element={<OverviewRoot />} />
 
             <Route path="/" element={<Play />} />
 

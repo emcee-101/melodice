@@ -51,34 +51,34 @@ export default function Player({index, songData }) {
         let id, answer1, answer2;
         
 
+        if(songData.type != "lyrics")
+            try {
 
-        try {
+                if (stateID) {
 
-            if (stateID) {
+                    id=stateID
+        
+                } else {
 
-                id=stateID
-     
-            } else {
+                    console.log("took wrong path")
+        
+                    // testcase with no songinfos being passed 
+                    answer1 = await standardFetch(IP + matcher_service + 'Mongoose', "GET")
+                
+                    id = answer1[0]._id
 
-                console.log("took wrong path")
-    
-                // testcase with no songinfos being passed 
-                answer1 = await standardFetch(IP + matcher_service + 'Mongoose', "GET")
-              
-                id = answer1[0]._id
+                }
+
+                console.log("id: " + id)
+
+                answer2 = await standardFetch(IP + audio_service + id, "GET")
+
+
+                updateMusicURL(answer2.audiourl);
+
 
             }
-
-            console.log("id: " + id)
-
-            answer2 = await standardFetch(IP + audio_service + id, "GET")
-
-
-            updateMusicURL(answer2.audiourl);
-
-
-        }
-        catch(e) {console.log(e)}
+            catch(e) {console.log(e)}
   
     }
 
