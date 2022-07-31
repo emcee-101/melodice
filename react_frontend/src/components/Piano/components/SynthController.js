@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PolySynth, Gain, Filter, Volume, Reverb, Distortion, EQ3, FeedbackDelay, BitCrusher, Destination, FFT, Synth, } from "tone";
+import { PolySynth, Gain, Filter, Volume, Reverb, Distortion, EQ3, FeedbackDelay, BitCrusher, Destination, FFT, Synth, Recorder } from "tone";
 import { OptionsContext } from "../contexts/OptionsContext";
 import OscillatorControls from "./OscillatorControls";
 import MasterControls from "./MasterControls";
@@ -10,6 +10,7 @@ import EffectsControls from "./EffectsControls";
 import EQ3Controls from "./EQ3Controls";
 import Midi from "./Midi";
 import Presets from "./Presets";
+import Record from "./Record";
 import { KEY_TO_FULLNOTE, VALID_KEYS } from "../globals/constants";
 import { defaults } from "../presets";
 import "../styles/SynthController.css";
@@ -36,6 +37,20 @@ class SynthController extends Component {
             this.node2.connect(this.filter);
             //connect the filter -> EQ3 -> distortion -> bitCrusher -> delay -> reverb -> masterVolume -> fft
             this.filter.chain(this.eq3, this.distortion, this.bitCrusher, this.delay, this.reverb, this.masterVolume, this.fft, Destination);
+            this.filter.connect(this.recorder);
+        };
+        this.startRecording = (toggle) => {
+            this.recorder.start();
+        };
+        this.stopRecording = (toggle) => {
+            // the recorded audio is returned as a blob
+            const recording = this.recorder.stop();
+            // download the recording by creating an anchor element and blob url
+            const url = URL.createObjectURL(recording);
+            const anchor = document.createElement("a");
+            anchor.download = "recording.webm";
+            anchor.href = url;
+            anchor.click();
         };
         this.onKeyDown = (event) => {
             // if key held down
@@ -131,6 +146,7 @@ class SynthController extends Component {
         this.delay = new FeedbackDelay(defaults.delay);
         this.bitCrusher = new BitCrusher(defaults.bitCrusher);
         this.fft = new FFT(512);
+        this.recorder = new Recorder();
         this.init();
     }
     componentDidMount() {
@@ -145,6 +161,8 @@ class SynthController extends Component {
         return (<div className="container">
         <div className="top-bar">
           <Midi playNote={this.playNote} stopNote={this.stopNote}/>
+          <Record recorder={this.recorder} startRecording={this.startRecording} stopRecording={this.stopRecording}/>
+          <h1>Melodice Original</h1>
           <Presets changePreset={this.changePreset}/>
         </div>
         <OptionsContext.Provider value={{ options: this.state.options, setOptions: this.setOptions }}>
