@@ -1,22 +1,41 @@
 
 import React, { useState, useEffect } from "react";
-import SongElement from "./songElement.js"
-import { standardFetch } from "./util/fetch.js";
-import { IP, getfulldata_service } from "./util/config.js"
+import SongElement from "../SongElement/songElement.js"
+import { standardFetch } from "../../util/fetch.js";
+import { IP, getfulldata_service } from "../../util/config.js"
 
 
-export default function Overview({singleTrack = "false", requestedTrackID = null}) {
+
+
+            // tracksPassed is a optional request for a specific list of Songs to display, singleTrack indicates the search for one specific track which id is requestedTrackID
+export default function Overview({tracksPassed = null, singleTrack = "false", requestedTrackID = null}) {
+
+    var style = {
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "justify-content": "center",
+        "align-items": "center"}
 
     const [currentData, setData] = useState([{}]);
 
     async function fetchData(){
 
-        let data = null;
+        let data = [];
 
         if ((singleTrack == "true") && (requestedTrackID)){
             
-            data = await standardFetch(IP + getfulldata_service + requestedTrackID, "GET");
+            // gets one entry
+            data[0] = await standardFetch(IP + getfulldata_service + requestedTrackID, "GET");
             
+        } else if (tracksPassed){ 
+
+            //gets List of requested Tracks
+            tracksPassed.forEach(async trackID => {
+
+                data.push(await standardFetch(IP + getfulldata_service + trackID, "GET"))
+                
+            });
+
         } else {
         
             // gets all ID-entries for Songs in DB
@@ -30,14 +49,14 @@ export default function Overview({singleTrack = "false", requestedTrackID = null
     } 
      
     // run only once when component mounted
-    useEffect(() => { fetchData(); }, []);
+    useEffect( () => {  fetchData(); }, []);
 
     if(currentData == {}){
         return ( <div className="overview">Loading...</div> )
 
     } else if (currentData[0]._id){
         return (
-            <div className="overview">
+            <div className="overview" style={style}>
                 
                 {currentData.map((set, index) => (
                     

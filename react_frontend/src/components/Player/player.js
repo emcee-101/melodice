@@ -6,8 +6,8 @@ import React, {
   } from "react";
 import styled from "styled-components";
 import { WaveSurfer, WaveForm } from "wavesurfer-react";
-import { standardFetch } from './util/fetch.js'
-import { IP, audio_service, matcher_service } from './util/config.js'
+import { standardFetch } from '../../util/fetch.js'
+import { IP, audio_service, matcher_service } from '../../util/config.js'
 
 
 const Buttons = styled.div`
@@ -23,8 +23,6 @@ const Button = styled.button``;
 
 export default function Player({index, songData }) {
 
-    console.log("1st stop")
-    console.log(songData)
 
     const [musURL, updateMusicURL] = useState('');
     const wavesurferRef = useRef();
@@ -86,12 +84,19 @@ export default function Player({index, songData }) {
 
 
     // run only once when component mounted
-    useEffect(() => { console.log("ids:" + songData._id + "   " + index); fetchData(songData._id); }, []);
+    useEffect(() => { fetchData(songData._id) }, []);
 
     const play = useCallback(() => {
         console.log(wavesurferRef.current)
         wavesurferRef.current.playPause();
       }, []);
+
+
+    var waveFormStyle = {
+        "width": "100%",  
+        "min-height": "8rem",
+        "padding": "0.5rem 0",
+      }
 
     if (musURL == '') {
 
@@ -101,7 +106,7 @@ export default function Player({index, songData }) {
 
             return (<div className="Player" id={index} >
                         <WaveSurfer onMount={handleWSMount}>
-                            <WaveForm id="waveform" cursorColor="transparent" />
+                            <WaveForm style={waveFormStyle} id="waveform" cursorColor="transparent" />
                                 
                         </WaveSurfer>
                         <Buttons>

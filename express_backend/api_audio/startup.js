@@ -20,7 +20,7 @@ export function init(){
     app.use(cors());
 
     // Create API 
-    app.get('/audio/:parameter', function(req, res){handleAudioRequests(req, res)});
+    app.get('/audio/:parameter?', function(req, res){handleAudioRequests(req, res)});
 
     
     // Serve Audio Files (http://localhost:10091/audio_files/file.whatever)
