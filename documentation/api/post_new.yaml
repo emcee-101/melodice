@@ -30,7 +30,7 @@
             - name: audiofile
               in: body
               required: false (only if audiofile is actually added)
-              description: Base64 encoded Binary Data of File (see source code/test_api_call.js)
+              description: Base64 encoded Binary Data of File in ogg format and webm container (see source code of service  and the file test_api_call.js, is an older example that still uses MP3, but works)
             - name: lyrics
               in: body
               required: false (only if lyrics is actually added)

@@ -4,12 +4,75 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presentation Team Melodice</title>
+    <style>
+
+      img{
+        width: auto;
+        height: 200px
+      }
+
+    </style>
   </head>
   <body>
-    <h1>Inhalt</h1>
-    <a href="rest_api_intern.html">Dokumentation der angebotenen APIs</a>
-    <a href="rest_api_internet.html">Dokumentation der konsumierten APIs</a>
-    <a href="./presentations/zwischenpraesentation_melodice.pdf">Präsentation des geplanten Service</a>
-    <a href="./presentations/endpraesentation_melodice.pdf">Präsentation des geplanten Service</a>
+
+    <h1>Team Melodice</h1>
+
+    <h2>Mitglieder</h2>
+    <ul><li>Mohammed Zidane</li>
+      <li>Niklas Herzog</li></ul>
+
+    <h2>Externe Dateien</h2><br>
+    <a href="rest_api_intern.html">Dokumentation der angebotenen APIs</a><br>
+    <a href="rest_api_internet.html">Dokumentation der konsumierten APIs</a><br>
+    <a href="./presentations/zwischenpraesentation_melodice.pdf">Präsentation des geplanten Service</a><br>
+    <a href="./presentations/endpraesentation_melodice.pdf">Präsentation des geplanten Service</a><br>
+    <br>
+    <a href="https://git.ai.fh-erfurt.de/team-melodice/ss2022_wa_melodice/-/tree/main/documentation/api">Dokumentation in OpenAPI Format im GIT</a><br>
+  <br>  <br>
+
+    <h2>Stand des Projektes und Selbsteinschätzung durch Niklas:</h2>
+    <p>Es ist uns leider nicht gelungen alle Ideen und Elemente umzusetzen die wir uns wünschten. Auch sind einige der Vorhandenen Sachen verbuggt.
+      Funktional ist die Darstellung aller Songs in der DB, das Keyboard, wofür wir aktuell eine Library nutzen (siehe Quellen), der Header, die APIs und die Datenbank.
+      API Calls an "theaudiodb" funktionieren Ebenfalls. Die vorgesehenen API Calls an die API des Teams "Goodquestion" funktionieren, wir hatten aber Probleme mit der Darstellung in React.
+      Die Funktionalität aber ist einsehbar in der Komponente "landingpage" in der Console, da ein logging der Ergebnisse eingestellt ist.
+      Der Ebengenannte Call an die audiodb ist in der Komponente "save". Beide sind erreichbar durch eigene Routen, die allerdings nicht zum manuellen Aufruf vorgesehen waren.
+      Die Routen sind zum späteren Planmäßigen Aufruf durch andere Komponenten, sowie zum Debugging.<br>
+      Die URLs sind: "ADRESSE_FRONTEND/save" und "ADRESSE_FRONTEND/landingpage/?trackid=DBID".<br>
+      Das korrekte Speichern von Metadaten ist mit Save möglich und die weiterleitung auf die LandingPage funktioniert auch.
+      Die Hierarchie von "overviewRoot"->"overview"->"songelement"->"player" klappt ebenfalls.<br>
+      Dockerisierung funktioniert voll und ganz. <br>
+      <br>
+      In der handleAudioRequests-Funktion des Backend Services Audio (main.js) findet sich ausserdem am unteren Ende auskommentierter Code, der eine MP3-Datei zuschneidet, damit sie nicht zu lang für die Shazam API ist.
+      Diese können wir nun nicht mehr nutzen, da wir zu spät den Rekorder einstellten, der ja Audio vom Keyboard aufnimmt.
+      In der Frontend-Komponente "landingpage" findet sich dazu das Gegenstück, dass dann Shazam callen sollte. Der Code existiert, funktioniert aber noch nicht. 
+      Auch Links zu einzelnen Songs funktionieren nicht.
+      Letzenendes hatte es bei uns glaube Ich hauptsächlich an Zeit und einem guten Plan zur Umsetzung gemangelt, da wir vieles Überstürzt angegangen sind und anderes dann erst viel zu spät geklärt haben.
+      <br>
+      <br>
+      Ich habe im Projekt die Backend Services bis auf "Matcher" gemacht und ebenso die Komponenten "Overview" mit der gesamten Hierarchie ("root", "SongElement", etc...), sowie die Save Komponente und die LandingPage.
+      Mohammed hat das Piano, die Suchfunktion und den Matcher Service gemacht.
+    </p>
+    <br><br>
+    <h2>Installation:</h2>
+    <p>
+      Zur Installation einfach im Rootverzeichnis des Services "docker compose up --build" aufrufen (per Terminal).
+      Natürlich setzt das vorraus das Docker auf dem jeweiligen Rechner installiert ist.
+    </p>
+
+    <br><br>
+    <h2>Wireframes:</h2><br>
+
+    Die Komponenten LandingPage, Save, Piano, Overview und Overview in der Variante wenn nur ein einzener Track aufgerufen wird; ganz rechts overview Komponente in feinerer Ausarbeitung<br>
+    <img src="./wireframes/wireframe_uebersicht.drawio.png" />
+    <img src="./wireframes/wireframe_overview_components.drawio.png" />
+
+    <br><br>
+  <h2>DB Schema:</h2><br>
+    <img src="./db/db.jpg">
+    <br>
+  <h2>Quellen ausserhalb der Dependencies:</h2><br>
+      Synth https://github.com/ungerecht/retro-web-synth
+
+      <br><br><br><br><br><br><br>
   </body>
 </html>

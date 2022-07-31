@@ -11,17 +11,19 @@ import OverviewRoot from './routes/overview/overviewRoot'
 import Play from './routes/play/play'
 import Save from './components/Save/save'
 import LandingPage from './components/LandingPage/LandingPage'
+import './styles.css'
+
 
 function App() {
   return (
     <>
-      
       <Router>
           <Header/>
           <Routes>
+
             <Route path="/overview" element={<OverviewRoot />} />
               
-            <Route path="/overview/:trackid" element={<OverviewRoot />} />
+            <Route path="/overview/:trackid?" element={<OverviewRoot />} />
 
             <Route path="/" element={<Play />} />
 

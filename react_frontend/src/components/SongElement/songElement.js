@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Player from '../Player/player.js';
-import Card from 'react-bootstrap/Card';
 import {standardFetch} from '../../util/fetch'
 import {rapid_api_audiodb_host} from '../../util/config'
 
@@ -32,39 +31,38 @@ export default function SongElement({index, songData={_id: "bogus"}}) {
     if(dbData){
 
         return (
-                <Card>
-                    <Card.Body>            
+                <div className="card">
+                   
                         <Player 
                             index = {index} 
                             songData = {{_id: songData._id}}/>
-                    </Card.Body>
-                    <Card.Footer>
-                        Title: {songData.name}
-                        Artist: {songData.author}
-                        {lyrics}
-                        Original Author: {dbData.strArtist}
-                        Original Title: {dbData.strTrack}
-                        Original Album: {dbData.strAlbum}
-                    </Card.Footer>
-                </Card>
+                    <div class="container">   
+                        <ul>
+                        <li><h4><b>{songData.name}</b></h4></li>                      
+                        <li><p>Artist: {songData.author}</p> </li>
+                        <li><p>{lyrics}</p></li>
+                        <li>Original Author: {dbData.strArtist}</li>
+                        <li>Original Title: {dbData.strTrack}</li>
+                        <li>Original Album: {dbData.strAlbum}</li>
+                        </ul>
+                    </div>
+                </div>
                 )
 
     } else {
 
 
         return (
-            <Card>
-                <Card.Body>            
+            <div className="card">
                     <Player 
                         index = {index} 
                         songData = {{_id: songData._id}}/>
-                </Card.Body>
-                <Card.Footer>
-                    Title: {songData.name}
-                    Artist: {songData.author}
-                    {lyrics}
-                </Card.Footer>
-            </Card>
+                <div class="container">   
+                    <h4><b>{songData.name}</b></h4>                      
+                    <p>Artist: {songData.author}</p> 
+                    <p>{lyrics}</p>
+                </div>
+            </div>
         )}
 }
 

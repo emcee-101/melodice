@@ -17,9 +17,7 @@
     "tone": "^14.7.77",
     "wavesurfer-react": "^2.2.1",
     "web-vitals": "^2.1.4",
-    "webmidi": "^3.0.21",
-    "bootstrap":"^5.2.0",
-    "react-bootstrap": "^2.4.0"
+    "webmidi": "^3.0.21"
   },
   "scripts":
   {

@@ -28,7 +28,7 @@ async function saveAudioFile(audioFileData, name){
         const fileContents = Buffer.from(audioFileData, 'base64');
         console.log(fileContents)
         // find out corresponding filename for data to be written
-        const audioFileName = `${getAudioDir()}/${name}.mp3`;
+        const audioFileName = `${getAudioDir()}/${name}.webm`;
         console.log('audiofilename: '+audioFileName);
 
         fs.writeFile(audioFileName, fileContents, function(err) {
@@ -37,7 +37,7 @@ async function saveAudioFile(audioFileData, name){
         else{
             console.log(`file saved to ${audioFileName}`)
 
-            fileNameToBeReferenced = name+'.mp3'
+            fileNameToBeReferenced = name+'.webm'
             console.log(`the file will be noted in the db as the following name: ${fileNameToBeReferenced}`)
             }
         });
@@ -64,14 +64,14 @@ export async function requestPost(req, res){
         // add new Song in DB with only audio
         case 'audio':
             saveAudioFile(req.body.audiodata, req.body.name)
-            songData.audiofile = req.body.name+'.mp3'
+            songData.audiofile = req.body.name+'.webm'
             console.log(songData)
             break;
         
         // add new Song in DB with both
         case 'both':
             saveAudioFile(req.body.audiodata, req.body.name)
-            songData.audiofile = req.body.name+'.mp3'
+            songData.audiofile = req.body.name+'.webm'
             songData.lyrics = req.body.lyrics
             break;
 
@@ -95,7 +95,7 @@ export async function requestPost(req, res){
         
                         case 'addAudio':
                             saveAudioFile(req.body.audiodata, req.body.name)
-                            .then(tempSong.audiofile = req.body.name+'.mp3')
+                            .then(tempSong.audiofile = req.body.name+'.webm')
                             break;
                         
                     }

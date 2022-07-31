@@ -2,9 +2,6 @@ import React, {
     useState,
     useEffect
   } from "react";
-import Button from "react-bootstrap/Button";
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import { standardFetch } from '../../util/fetch'
 import { IP, post_new_service, rapid_api_audiodb_host } from '../../util/config'
 import { useNavigate } from "react-router-dom";
@@ -15,12 +12,11 @@ export default function Save({parentData={"audio": "Bogus"}}){
 
     let style = {padding: "20px"}
     let formData = {author: null, name: null, origauthor: null, origtitle: null, lyrics: null}
-    let audioDBID = null
     let log = ""
     const [outputLog, setOutputLog] = useState("");                 /* rerender in case there is something filled out wrong*/
 
     const [isCover, setAsCover] = useState(false);
-    const [audioDBEntries, setAudioDBEntries] = useState({});       /* <--- this is for when there is a selection like which one is it? */
+    const [audioDBID, setaudioDBID] = useState(null);
 
     let navigation = useNavigate();
 
@@ -30,7 +26,7 @@ export default function Save({parentData={"audio": "Bogus"}}){
         let audioDBresponse = await standardFetch(`https://theaudiodb.p.rapidapi.com/searchtrack.php?s=${formData.origauthor}&t=${formData.origtitle}`, "GET",{}, {type: "rapidapi", rapid_api_host: rapid_api_audiodb_host})
         
         //selects first match as fitting one that gets added to db... please add logic, so that this can be chosen on screen
-        if(!audioDBresponse.message){audioDBID = audioDBresponse.track[0].idTrack} 
+        if(!audioDBresponse.message){setaudioDBID(audioDBresponse.track[0].idTrack) } 
         else {log = log + "couldnt find original track in audioDB please ty again acheck for mistakes; "}
         console.log("message:" + audioDBresponse.message)
         console.log(audioDBresponse)
@@ -102,92 +98,54 @@ export default function Save({parentData={"audio": "Bogus"}}){
     console.log(isCover + "RENDER TRIGGERED")
 
     return <>
-    
-            <Form id="saveForm" style={style}>
-                
-                <InputGroup className="mb-3" controlId="author" >
-                        <InputGroup.Text id="inputGroup-sizing-default">Your Name:
-                            </InputGroup.Text>
-                        <Form.Control
-                            type="text" 
-                            placeholder="Name" 
-                            onChange={(event) => formData.author=event.target.value}
-                            aria-label="Your Name"
-                        /> 
-                </InputGroup>
-                
-                <InputGroup className="mb-3" controlId="name" >                            
-                        <InputGroup.Text id="inputGroup-sizing-default">Name of the Song:
-                            </InputGroup.Text>
-                        <Form.Control
-                            type="text" 
-                            placeholder="Title" 
-                            onChange={(event) => formData.name=event.target.value}
-                            aria-label="Name Of The Song"
-                        />  
-                        <br />
-                </InputGroup>
+            <form>
+                <ul className="form-style-1">
 
-                <InputGroup className="mb-3" controlId="lyrics" >                            
-                        <InputGroup.Text id="inputGroup-sizing-default">Lyrics of Song:
-                            </InputGroup.Text>
-                        <Form.Control
-                            type="text" 
-                            placeholder="Lyrics" 
-                            onChange={(event) => formData.lyrics=event.target.value}
-                            aria-label="Name Of The Song"
-                        />  
-                        <br />
-                </InputGroup>
+                    <li>
+                        <label>Your Name: <span className="required">*</span></label>
+                        <input type="text" name="field1" className="field-divided" placeholder="Full" onChange={(event) => formData.author=event.target.value}/> 
+                    </li>
+                
+                    <li>
+                        <label>Name Of Song: <span className="required">*</span></label>
+                        <input type="text" name="field2" className="field-divided" placeholder="Full" onChange={(event) => formData.name=event.target.value}/> 
+                    </li>
 
+                    <li>
+                        <label>Lyrics: <span className="required"></span></label>
+                        <input type="text" name="field3" className="field-divided" placeholder="Full" onChange={(event) => formData.lyrics=event.target.value}/> 
+                    </li>             
+                
                 <br />
                 <br />
-
+                    <li>
                 Is this Song a cover of a already existing Song?   
-                
+                    </li> 
                 <br />
+                    <li> 
+                <button type='button' onClick={()=>{ isCover ? setAsCover(false) : setAsCover(true)}}> { isCover.toString() }</button>
+                    </li> 
+                <br />
+                    <li style={{ visibility: isCover ? "visible" : "hidden" }}>
+                        <label>Original Author: <span className="required"></span></label>
+                        <input type="text" name="field4" className="field-divided" placeholder="Full" onChange={(event) => formData.origauthor=event.target.value}/> 
+                    </li>
+                    <li style={{ visibility: isCover ? "visible" : "hidden" }}>
+                        <label>Original Name: <span className="required"></span></label>
+                        <input type="text" name="field5" className="field-divided" placeholder="Full" onChange={(event) => formData.origtitle=event.target.value}/> 
+                    </li>
          
-                <Button variant="outline-primary" onClick={()=>{isCover ? setAsCover(false) : setAsCover(true)}}>
-                    { isCover.toString() }
-                </Button>           {' '}
-                
                 <br />
-
-                <InputGroup className="mb-3" controlId="origauthor" style={{ visibility: isCover ? "visible" : "hidden" }}>
-                        <InputGroup.Text id="inputGroup-sizing-default">Original Author:
-                            </InputGroup.Text>
-                        <Form.Control
-                            type="text"    
-                            placeholder="Original Author" 
-                            onChange={(event) => formData.origauthor=event.target.value}
-                            aria-label="Original Author Name"
-                        />  
-                        <br />
-                </InputGroup>
-                
-                <InputGroup className="mb-3" controlId="origname" style={{ visibility: isCover ? "visible" : "hidden" }}>
-                        <InputGroup.Text id="inputGroup-sizing-default">Original Title:
-                            </InputGroup.Text>
-                        <Form.Control
-                            type="text" 
-                            placeholder="Song Name"  
-                            onChange={(event) => formData.origtitle=event.target.value}
-                            aria-label="Original Song Name"
-                        />  
-                        <br />
-                </InputGroup>                            
-                
+                <li>
+                <button type='button' onClick={checkEntriesAudioDB}> Check for AudioDB-Entries!</button>
+                </li> <li>
+                    {`Found an Object in theaudiodb: ${audioDBID}`}
+                </li> <li>
+                <button type='button' onClick={submit}> Submit</button>
+                </li>
                 <br />
-                
-                <Button variant="outline-primary" onClick={checkEntriesAudioDB}>
-                    Check for AudioDB-Entries!
-                </Button>{' '}<br />
-
-                <br />
-
-                <Button variant="primary" onClick={submit}>Submit</Button>{' '}
-
-            </Form>
+            </ul>
+            </form>
 
             <code> 
                 {outputLog}

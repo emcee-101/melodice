@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react"
-import Button from "react-bootstrap/Button"
 import { useParams, useNavigate } from "react-router-dom"
 import {audio_service, getfulldata_service, IP, ownPort, plannedIP, rapid_api_shazam_host} from "../../util/config"
 import { standardFetch } from "../../util/fetch"
@@ -13,12 +12,12 @@ export default function LandingPage(){
 
     let navigation = useNavigate();
     const [foundStatus,setfoundStatus] = useState("false")
-    let fetchyData = [0,0,0]
+    let fetchyData = [0,{data:{newUrl: "null"}},0]
     
 
 
 
-
+    // not working
     async function findWithShazam(data){
 
         let audioBuffer = Buffer.from(data, 'binary').toString('base64')
@@ -39,6 +38,7 @@ export default function LandingPage(){
         }
     }
 
+        // not set up for mp3
     async function getAudioCut(){
         let audioResponse
 
@@ -61,23 +61,32 @@ export default function LandingPage(){
 
     }
 
+    // can get img but is not yet displayed on site
     async function renderQR(){
+        console.log("qrurl")
 
-        let base64Data = fetchyData[2].data.base64();
+            if (fetchyData[2]){
+                let base64Data = fetchyData[2].data.base64;
 
-        // convert from base64 to binary probably (internally based on mime type)
-        const converted = await fetch(base64Data);
+                // convert from base64 to binary (internally based on mime type)
+                let converted = await fetch(base64Data)
+                                    .then(res => res.blob())
+                                    .then((res) => {return res});
+                console.log(converted)
+                let qrurl = URL.createObjectURL(converted)
+                console.log(qrurl)
+            return qrurl}
 
-        let qrurl = URL.createObjectURL(new Blob(converted, {type: 'application/pdf'}));
-        return qrurl
+            else console.log(" hallo ")
     }
 
+    // works
     async function fetchFromAPIs(givenID){
         
         let myURL, shortenAnswer, qrCodeAnswer;
 
         if(givenID)
-            myURL = encodeURIComponent(plannedIP+ownPort+"landingpage/"+givenID    );
+            myURL = encodeURIComponent(plannedIP+ownPort+"landingpage/?trackid="+givenID    );
             shortenAnswer = await standardFetch("http://194.94.204.27:10053/tools/shortenurl?url="+myURL,"GET",{},{})
             qrCodeAnswer = await standardFetch("http://194.94.204.27:10053/tools/qrcode?message="+myURL,"GET",{},{})
             console.log(shortenAnswer)
@@ -88,19 +97,20 @@ export default function LandingPage(){
             setFetchyStatus("fetched")
     }
 
-    useEffect(()=>{getAudioCut(); fetchFromAPIs()})
+    useEffect(()=>{getAudioCut(); fetchFromAPIs(id)})
 
 
 
     
 
         return (<div>
-            <p>Your Song was created under the id: {parameters.trackid}, Link should be {IP+ownPort+"overview?track="+parameters.trackid}</p><br />
-            <a href={fetchyData[1].newUrl} style={{ visibility: fetchyStatus ? "visible" : "hidden" }}> Shortened Link: {fetchyData[1].newUrl} </a >
+            <p>Your Song was created under the id: {parameters.trackid}, Link should be {IP+ownPort+"overview/?trackid="+parameters.trackid}</p><br />
+            <a href={fetchyData[1].data.newUrl} style={{ visibility: fetchyStatus ? "visible" : "hidden" }}> Shortened Link: {fetchyData[1].data.newUrl} </a >
 
-            {/* convert base64 qrcode data to a blob and get a link for that and refer the user to that link */}
-            <Button onClick={()=>{let url=renderQR(); navigation(url)}} style={{ visibility: fetchyStatus ? "visible" : "hidden" }}>Display QR Code for your Song</Button>
+            {/* does not work */}
+            <button onClick={()=>{let url=renderQR(); navigation(url)}} style={{ visibility: fetchyStatus ? "visible" : "hidden" }}>Display QR Code for your Song</button>
 
+            {/* does not work */}
             <code style={{ visibility: fetchyStatus ? "visible" : "hidden" }}>
                 {()=>{if(foundStatus == "false"){return "file is being searched by shazam"} else if(foundStatus=="notfound"){return "Your Youtube Ad revenue is safe :)"} else {return "Oh no, your audio will be flagged :("}}}
             </code >
