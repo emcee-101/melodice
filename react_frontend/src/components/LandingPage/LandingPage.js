@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Button } from "react-bootstrap/lib/InputGroup"
 import { useParams } from "react-router-dom"
-import {IP, ownPort, plannedIP} from "../../util/config"
+import {audio_service, IP, ownPort, plannedIP} from "../../util/config"
 import { standardFetch } from "../../util/fetch"
+import { mp3cutter} from "../../util/lib/simple-mp3-cutter-master"
  
 
 export default function LandingPage(){
@@ -14,6 +15,33 @@ export default function LandingPage(){
 
     const cache = useMemo(()=>{fetchFromAPIs(id)}, [id])
     //useEffect(fetchFromAPIs(id), [])
+
+    async function findWithShazam(){
+        //await standardFetch("http://194.94.204.27:10053/tools/qrcode?message="+myURL,"GET",{},{})
+        //shazam
+
+    }
+
+    async function getAudioCut(){
+
+        audioResponse = await standardFetch(IP+audio_service+id,"GET",{},{})
+        if(!audioResponse.message){
+
+
+            fetch(audioResponse.audiourl)
+                .then(res=>res.blob())
+                .then(blob=>{
+
+                    let cutter = new mp3cutter
+                    cutter.cut(blob, 0, 3, findWithShazam);
+
+                })
+
+
+        }
+
+        await standardFetch("http://194.94.204.27:10053/tools/qrcode?message="+myURL,"GET",{},{})
+    }
 
     function renderQR(){
 
