@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "React Frontend",
   "private": true,
-  "dependencies": {
+  "dependencies":
+  {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,21 +17,26 @@
     "tone": "^14.7.77",
     "wavesurfer-react": "^2.2.1",
     "web-vitals": "^2.1.4",
-    "webmidi": "^3.0.21"
+    "webmidi": "^3.0.21",
+    "bootstrap":"^5.2.0",
+    "react-bootstrap": "^2.4.0"
   },
-  "scripts": {
+  "scripts":
+  {
     "start": "PORT=10094 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
+  "eslintConfig":
+  {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
   },
-  "browserslist": {
+  "browserslist":
+  {
     "production": [
       ">0.2%",
       "not dead",

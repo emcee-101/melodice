@@ -1,11 +1,17 @@
 import {initExpressServer,connectMongoose,clearDatabase} from '../common_base/common.js'
 import {requestPost} from './main.js'
 import express from 'express'
+import { LISTEN_PORT } from "./config.js";
+import cors from "cors"
+
+
 
 
 function postInitExpressServer(name, url_suffix, port, callback_function){
 
     const app = express();
+
+    app.use(cors());
     
     // Parse URL-encoded bodies (as sent by HTML forms)
     app.use(express.urlencoded({limit: '50mb'}));
@@ -28,5 +34,5 @@ function postInitExpressServer(name, url_suffix, port, callback_function){
 
 export function init()
 {
-    postInitExpressServer('Poster', '/api_post_new', 10097, requestPost);
+    postInitExpressServer('Poster', '/api_post_new', LISTEN_PORT, requestPost);
 };

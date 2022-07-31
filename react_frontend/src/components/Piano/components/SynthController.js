@@ -37,20 +37,33 @@ class SynthController extends Component {
             this.node2.connect(this.filter);
             //connect the filter -> EQ3 -> distortion -> bitCrusher -> delay -> reverb -> masterVolume -> fft
             this.filter.chain(this.eq3, this.distortion, this.bitCrusher, this.delay, this.reverb, this.masterVolume, this.fft, Destination);
-            this.filter.connect(this.recorder);
+            Destination.connect(this.recorder);
         };
-        this.startRecording = (toggle) => {
+        this.startRecording = () => {
             this.recorder.start();
+            setTimeout(async () => {
+                // the recorded audio is returned as a blob
+                const recording = await this.recorder.stop();
+                // download the recording by creating an anchor element and blob url
+                const url = URL.createObjectURL(recording);
+                const anchor = document.createElement("a");
+                anchor.download = "recording.webm";
+                anchor.href = url;
+                anchor.click();
+            }, 8000);
         };
-        this.stopRecording = (toggle) => {
+        this.stopRecording = () => {
             // the recorded audio is returned as a blob
-            const recording = this.recorder.stop();
-            // download the recording by creating an anchor element and blob url
-            const url = URL.createObjectURL(recording);
-            const anchor = document.createElement("a");
-            anchor.download = "recording.webm";
-            anchor.href = url;
-            anchor.click();
+            setTimeout(async () => {
+                // the recorded audio is returned as a blob
+                const recording = await this.recorder.stop();
+                // download the recording by creating an anchor element and blob url
+                const url = URL.createObjectURL(recording);
+                const anchor = document.createElement("a");
+                anchor.download = "recording.webm";
+                anchor.href = url;
+                anchor.click();
+            }, 500);
         };
         this.onKeyDown = (event) => {
             // if key held down

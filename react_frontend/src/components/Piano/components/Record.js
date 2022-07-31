@@ -20,7 +20,7 @@ const Record = ({ recorder, startRecording, stopRecording }) => {
         optionsContext.setOptions(optionsCopy);
     }, [recorder, optionsContext]);
     return (
-        <div className="type-buttons">
+        <div className="type-buttons row">
           <RadioButtonGroup items={["recording", "stopped"]} id={"recorder status"} comparator={status} buttonSize="large" onValueChange={handleRecorderStatusChange}/>
         </div>);
 };

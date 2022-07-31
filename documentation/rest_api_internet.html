@@ -1,1 +1,93 @@
-﻿<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body><p style="margin-top:0pt;margin-bottom:10pt;border:none;mso-border-left-alt:none;mso-border-top-alt:none;mso-border-right-alt:none;mso-border-bottom-alt:none;mso-border-between:none"><span style="font-family:'Arial';font-size:18pt;color:#000000;mso-style-textfill-fill-color:#000000"><b>TO BE </b></span><span style="font-family:'Arial';font-size:18pt;color:#000000;mso-style-textfill-fill-color:#000000"><b>FILLED </b></span></p><p style="margin-top:0pt;margin-bottom:10pt;border:none;border-left:none;border-top:none;border-right:none;border-bottom:none;mso-border-between:none">&nbsp;</p></body></html>
+﻿<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation Team Melodice</title>
+  </head>
+  <body>
+    <h1>Konsumierte externe APIs</h1>
+    <h2>theAudioDB</h2>
+
+    bereitgestellt durch RapidAPI <br>
+    <br>
+    <a href="https://rapidapi.com/theaudiodb/api/theaudiodb/">Referenz für API</a>
+    <br>  <br>
+    Beispielcode: <br>
+    <code>const options = { <br>
+        method: 'GET', <br>
+        mode: 'cors', <br>
+        headers: { <br>
+            'X-RapidAPI-Key': '570e25dff9mshc40a93d4eac80d3p1add41jsn37a8fcb00570', <br>
+            'X-RapidAPI-Host': 'theaudiodb.p.rapidapi.com' <br>
+        } <br>
+    }; <br>
+    <br>
+    fetch('https://theaudiodb.p.rapidapi.com/track.php?h=32793500', options) <br>
+        .then(response => response.json()) <br>
+        .then(response => console.log(response)) <br>
+        .catch(err => console.error(err));</code> <br>
+        <br>
+    Planned Use-Cases and Endpoints:
+    <ul><li>Gather ID of a Song that is a cover (Endpoint: GET "Return track details from artist/track name")</li>
+    <li>Request Infos about a Song that is a cover with ID (Endpoint: GET "Return individual track info using a known TADBTrackID")</li></ul>
+
+    <div id="example">
+        <br> <br>
+  <br><br>
+  <h2>Tools (Team GoodQuestion)</h2>
+
+  <a href="http://194.94.204.27:10000/student_repos/SS2022_WA_GoodQuestion/documentation/rest_api_intern.html">Referenz für API</a>
+    Beispielcode: <br>
+    <code>const options = { <br>
+        method: 'GET', <br>
+        mode: 'cors', <br>
+        headers: { <br>
+            accept: application/json <br>
+        } <br>
+    }; <br>
+    <br>
+    fetch('http://194.94.204.27:10053/tools/shortenurl?url=https%3A%2F%2Fmy.really.long.url', options) <br>
+        .then(response => response.json()) <br>
+        .then(response => console.log(response)) <br>
+        .catch(err => console.error(err));</code> <br>
+        <br>
+    Planned Use-Cases and Endpoints: <br>
+    <ul><li>Generate QR Code for Link to a song upon creation to ease sharing (Endpoint: GET "/tools/qrcode")</li>
+    <li>Shorten URL for Linkn upon reation to ease sharing (Endpoint: GET "/tools/shortenurl")</li></ul>
+    <br><br>
+
+
+    <h2>Shazam Core</h2>
+    <br>
+    bereitgestellt durch RapidAPI <br>
+    <br>
+    <a href="https://rapidapi.com/tipsters/api/shazam-core/">Referenz für API</a> <br>
+    Beispielcode: <br>
+    <code>
+        const data = new Buffer();
+
+        const options = { <br>
+        method: 'POST', <br>
+        mode: 'cors', <br>
+        headers: { <br>
+            'content-type': 'application/json',<br>
+            'X-RapidAPI-Key': '570e25dff9mshc40a93d4eac80d3p1add41jsn37a8fcb00570', <br>
+            'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com' <br>
+        }, <br>
+        body: data<br>
+    }; <br>
+    <br>
+    fetch('https://shazam-core.p.rapidapi.com/v1/tracks/recognize', options) <br>
+        .then(response => response.json()) <br>
+        .then(response => console.log(response)) <br>
+        .catch(err => console.error(err));</code> <br>
+        <br>
+    Planned Use-Cases and Endpoints: <br>
+    <ul><li>Recognise a Track to tell if it is safe to post the Song on Youtube, SoundCloud etc. without getting flagged for Copyright violation (Endpoint: POST "Track Recognition")</li></ul>
+        <br>
+        <h3>Parameter:</h3>
+        <ul><li>body  -  binary data of a audio file in MP3,WAV,etc... (3-5 seconds, no more than 1 mb, best 500kb)</li></ul>
+        <br>
+  </body>
+</html>

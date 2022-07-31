@@ -3,6 +3,7 @@ import express from 'express'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import cors from "cors"
+import { LISTEN_PORT } from "./config.js";
 
 
 
@@ -15,12 +16,11 @@ export function init(){
     const __dirname = dirname(__filename)
 
     const app = express();
-    let port = 10091;
 
     app.use(cors());
 
     // Create API 
-    app.get('/audio/:parameter', function(req, res){handleAudioRequests(req, res)});
+    app.get('/audio/:parameter?', function(req, res){handleAudioRequests(req, res)});
 
     
     // Serve Audio Files (http://localhost:10091/audio_files/file.whatever)
@@ -33,8 +33,8 @@ export function init(){
       });
 
 
-    app.listen(port, () => {
-      console.log(`Audio-Service is listening at http://localhost:${port}/audio`);
+    app.listen(LISTEN_PORT, () => {
+      console.log(`Audio-Service is listening at http://localhost:${LISTEN_PORT}/audio`);
     });
   
     }

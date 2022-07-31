@@ -1,16 +1,25 @@
 import {Song} from "./data_model.js";
 
-
+// Test Data, that is added to display functionalities
 
  export async function createNewTestSong(){
 
-    let newSong = new Song({name: 'Is love Mongoose', type: 'l', author: 1, lyrics: 'Hili Hello wir sind alle froh', audiofile: 'amogus.mp3'});
+    let newSong1 = new Song({name: 'I love Mongoose', type: 'both', author: "musicLover507", lyrics: 'Shut up and dance with me', audiofile: 'amogus.mp3'});
   
-    await newSong.save(function (err, track) {
-      if (err) return console.error(err);
-          Song.find({}).lean().exec(function(err, docs) {
-            console.log(docs);
-          });
+    let newSong2 = new Song({name: 'Thueringer Kloesse', type: 'both', author: "musicLover507", lyrics: 'ThuereignerKloesse die hab ich gern', audiofile: 'thk.mp3'});
+  
+    let newSongs = [newSong1, newSong2]
+
+    newSongs.forEach(async (element) => {
+
+      element.save(function (err, track) {
+
+        if (err) console.log(err)
+        else console.log(track)
+
         });
+        
+      }); 
+
 
   };
