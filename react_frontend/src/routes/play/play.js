@@ -1,7 +1,7 @@
 import useScript from "../../hooks/useScript";
-import Piano from "../../components/Piano/Piano";
+import App from "../../components/Piano/components/App";
 export default function Play() {
     return (
-        <Piano/>
+        <App />
     );
   }

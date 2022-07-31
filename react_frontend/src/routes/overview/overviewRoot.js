@@ -1,15 +1,28 @@
 import React, {useState} from 'react';
-import Overview from './overview.js'
+import { useParams } from 'react-router-dom';
+import Overview from "../../components/Overview/overview.js";
+
+// tracksPassed is a List of Songs, that can be passed by search component
 
 
-export default function OverviewRoot() {
+export default function OverviewRoot({tracksPassed = null}) {
 
-      const [singleTrack, setSingleTrack] = useState("false");
-      const [requestedTrackID, setRequestedTrackID] = useState(null);
+      let params = useParams()
+      let singleTrack = "false"
+      let requestedTrackID = ""
 
-      return (<Overview
+      if(params.trackid) {
+            singleTrack = "true"
+            requestedTrackID = params.trackid;
+      }
+
+      return (<>
+                  <Overview
+                  tracksPassed = {tracksPassed}
                   singleTrack = {singleTrack}
-                  requestedTrackID = {requestedTrackID} />)
+                  requestedTrackID = {requestedTrackID} />
+            </>)
 
 }
+
 
