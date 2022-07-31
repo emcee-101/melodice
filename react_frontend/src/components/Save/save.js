@@ -16,9 +16,12 @@ export default function Save({parentData={"audio": "Bogus"}}){
     let style = {padding: "20px"}
     let formData = {author: null, name: null, origauthor: null, origtitle: null, lyrics: null}
     let audioDBID = null
+    let log = ""
+    const [outputLog, setOutputLog] = useState("");                 /* rerender in case there is something filled out wrong*/
 
     const [isCover, setAsCover] = useState(false);
     const [audioDBEntries, setAudioDBEntries] = useState({});       /* <--- this is for when there is a selection like which one is it? */
+
     let navigation = useNavigate();
 
     // check for data corresponding to origtitle and origauthor in the audioDB
@@ -28,6 +31,7 @@ export default function Save({parentData={"audio": "Bogus"}}){
         
         //selects first match as fitting one that gets added to db... please add logic, so that this can be chosen on screen
         if(!audioDBresponse.message){audioDBID = audioDBresponse.track[0].idTrack} 
+        else {log = log + "couldnt find original track in audioDB please ty again acheck for mistakes; "}
         console.log("message:" + audioDBresponse.message)
         console.log(audioDBresponse)
         //setAudioDBEntries = audioDBresponse
@@ -46,33 +50,48 @@ export default function Save({parentData={"audio": "Bogus"}}){
             cover: isCover.toString()};             /*  true, false */
                         
 
-        if (isCover) {
-            data.audiodbid = audioDBID }            /*  String */
-        console.log(data)
+        if (isCover && audioDBID) {
+            data.audiodbid = audioDBID              /*  String */ 
 
-            // validation missing
-        if(data && data.author && data.name && data.audiodata && data.cover){
 
-            if (data.lyrics){
-                data.type = "both"
-                data.typeOfPost = "both"
-            } else {
-                data.type = "audio"
-                data.typeOfPost = "audio"
-            }
             console.log(data)
-            console.log(data.audiodata)
-            
-            let result = await standardFetch(IP+post_new_service, 'POST', data,{})
 
-            console.log(result.message)
+            if(data && (data.author&&(data.author!="")) && (data.name&&(data.name!="")) && data.audiodata && data.cover){
+    
+                if (data.lyrics){
+                    data.type = "both"
+                    data.typeOfPost = "both"
+                } else {
+                    data.type = "audio"
+                    data.typeOfPost = "audio"
+                }
+                console.log(data)
+                console.log(data.audiodata)
+                
+                let result = await standardFetch(IP+post_new_service, 'POST', data,{})
+    
+                console.log(result.message)
+                
+                // refer to LandingPage if sucessfully pushed to DB
+                if(result._id) {
+                    navigation("/landingpage/" + result._id);
+                }
             
-            // refer to LandingPage if sucessfully pushed to DB
-            if(result._id) {
-                navigation("/landingpage/" + result._id);
+            } else {
+    
+                log = log + "a necessary value of the form is not filled, Please Check anew!; "
+                setOutputLog(log)
+                log=""
+    
             }
-        
-        }   
+
+
+        } else if(isCover && !audioDBID)  {
+            setOutputLog(log)
+            log=""
+        }         
+
+
     }
 
     console.log(isCover + "RENDER TRIGGERED")
@@ -161,7 +180,12 @@ export default function Save({parentData={"audio": "Bogus"}}){
                 <br />
 
                 <Button variant="primary" onClick={submit}>Submit</Button>{' '}
+
             </Form>
+
+            <code> 
+                {outputLog}
+            </code>
         </>
 
 

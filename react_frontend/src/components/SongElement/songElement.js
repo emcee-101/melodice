@@ -15,12 +15,12 @@ export default function SongElement({index, songData={_id: "bogus"}}) {
 
         let audioDBresponse
 
-        if(songData.audiodbtrackid)
-            audioDBresponse = await standardFetch(`https://theaudiodb.p.rapidapi.com/track.php?h=${songData.audiodbtrackid}`, "GET",{}, {type: "rapidapi", rapid_api_host: rapid_api_audiodb_host});
+        if(songData.audiodbid && (songData.cover == "true")){
+            audioDBresponse = await standardFetch(`https://theaudiodb.p.rapidapi.com/track.php?h=${songData.audiodbid}`, "GET",{}, {type: "rapidapi", rapid_api_host: rapid_api_audiodb_host});
 
-        if(!audioDBresponse.message && audioDBresponse.track[0].idAlbum)
-            setdbData(audioDBresponse.track[0])
-
+            if((!audioDBresponse.message) && (audioDBresponse.track[0].idAlbum))
+                setdbData(audioDBresponse.track[0])
+        }
     }
 
     useEffect(()=>{fetchMetadata()},[])
