@@ -1,27 +1,25 @@
 import { useCallback, memo, useContext } from "react";
 import RadioButtonGroup from "./RadioButtonGroup";
 import { OptionsContext } from "../contexts/OptionsContext";
-import "../styles/FilterControls.css";
+import "../styles/FilterControls.css"; 
 const Record = ({ recorder, startRecording, stopRecording }) => {
-    const status = recorder.status;
-    const optionsContext = useContext(OptionsContext);
+    let state = "stopped";
     const handleRecorderStatusChange = useCallback((e) => {
         const value = e.target.value;
-        if (value === "stopped") {
-            console.log('trueeeeee')
+        if (value == "stopped") {
+            console.log('stop recording')
             stopRecording()
         };
-        if (value === "recording") {
+        if (value == "started") {
+            console.log('start recording')
             startRecording()
         };
-        recorder.set({ status: value });
-        const optionsCopy = Object.assign({}, optionsContext.options);
-        optionsCopy.filter.status = value;
-        optionsContext.setOptions(optionsCopy);
-    }, [recorder, optionsContext]);
+        
+    }, [recorder]);
     return (
-        <div className="type-buttons row">
-          <RadioButtonGroup items={["recording", "stopped"]} id={"recorder status"} comparator={status} buttonSize="large" onValueChange={handleRecorderStatusChange}/>
+        <div className="presets-container row">
+            <label className="unselectable" htmlFor="presetsSelect">RECORDER</label>
+            <RadioButtonGroup items={["started", "stopped"]} id={"recorder status"}  buttonSize="large" onValueChange={handleRecorderStatusChange}/>
         </div>);
 };
 export default memo(Record);

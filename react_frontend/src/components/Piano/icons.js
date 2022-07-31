@@ -19,7 +19,7 @@ export const sawtooth = (<svg width="24px" height="24px" fill="currentColor" vie
 export const allpass = (<svg width="24px" height="24px" viewBox="0 0 24 24">
     <path fill="currentColor" stroke="black" strokeWidth="2px" d="M0,12 H24"/>
   </svg>);
-export const recording = (<svg width="24px" height="24px" viewBox="0 0 24 24">
+export const started = (<svg width="24px" height="24px" viewBox="0 0 24 24">
 <circle cx="12" cy="12" r="12" fill="red" />
 </svg>);
 export const stopped = (<svg width="24px" height="24px" viewBox="0 0 24 24">

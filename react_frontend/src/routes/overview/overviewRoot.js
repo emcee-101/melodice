@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import { useParams } from 'react-router-dom';
 import Overview from "../../components/Overview/overview.js";
 
-
 // tracksPassed is a List of Songs, that can be passed by search component
+
+
 export default function OverviewRoot({tracksPassed = null}) {
 
       let params = useParams()
@@ -15,10 +16,12 @@ export default function OverviewRoot({tracksPassed = null}) {
             requestedTrackID = params.trackid;
       }
 
-      return (<Overview
+      return (<>
+                  <Overview
                   tracksPassed = {tracksPassed}
                   singleTrack = {singleTrack}
-                  requestedTrackID = {requestedTrackID} />)
+                  requestedTrackID = {requestedTrackID} />
+            </>)
 
 }
 
