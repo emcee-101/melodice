@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Player from '../Player/player.js';
 import Card from 'react-bootstrap/Card';
+import {standardFetch} from '../../util/fetch'
+import {rapid_api_audiodb_host} from '../../util/config'
+
 
 export default function SongElement({index, songData={_id: "bogus"}}) {
 

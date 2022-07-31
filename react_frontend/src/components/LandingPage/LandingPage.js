@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Button } from "react-bootstrap/lib/InputGroup"
-import { useParams } from "react-router-dom"
+import Button from "react-bootstrap/Button"
+import { useParams, useNavigate } from "react-router-dom"
 import {audio_service, IP, ownPort, plannedIP, rapid_api_shazam_host} from "../../util/config"
 import { standardFetch } from "../../util/fetch"
-import { mp3cutter} from "../../util/lib/simple-mp3-cutter-master"
+import mp3cutter from "mp3-cutter"
  
 
 export default function LandingPage(){
@@ -13,9 +13,6 @@ export default function LandingPage(){
     let navigation = useNavigate();
     const [foundStatus,setfoundStatus] = useState("false")
 
-
-    const cache = useMemo(()=>{fetchFromAPIs(id)}, [id])
-    useEffect(()=>{getAudioCut})
 
     async function findWithShazam(data){
 
@@ -39,7 +36,7 @@ export default function LandingPage(){
 
     async function getAudioCut(){
 
-        audioResponse = await standardFetch(IP+audio_service+id,"GET",{},{})
+        let audioResponse = await standardFetch(IP+audio_service+id+"?chop=true","GET",{},{})
         if(!audioResponse.message){
 
 
@@ -47,10 +44,7 @@ export default function LandingPage(){
                 .then(res=>res.blob())
                 .then(blob=>{
 
-                    // cut audio with library for it to be short enough for the ShazamCore API
-                    let cutter = new mp3cutter
-                    cutter.cut(blob, 0, 3, findWithShazam);
-
+                    findWithShazam(blob);
                 })
 
 
@@ -58,7 +52,7 @@ export default function LandingPage(){
 
     }
 
-    function renderQR(){
+    async function renderQR(){
 
         let base64Data = cache[2].data.base64();
 
@@ -84,13 +78,18 @@ export default function LandingPage(){
             return [myURL, shortenAnswer, qrCodeAnswer]
     }
 
+
+    const cache = useMemo(()=>{fetchFromAPIs(id)}, [id])
+    useEffect(()=>{getAudioCut()})
+
+
     if (cache.myURL) 
         return (<div>
             <p>Your Song was created under the id: {parameters.trackid}, Link should be {IP+ownPort+"overview?track="+parameters.trackid}</p><br />
             <a href={cache[1].newUrl}> Shortened Link: {cache[1].newUrl} </a >
 
             {/* convert base64 qrcode data to a blob and get a link for that and refer the user to that link */}
-            <Button onClick={()=>{url=renderQR(); navigation(url)}}>Display QR Code for your Song</Button>
+            <Button onClick={()=>{let url=renderQR(); navigation(url)}}>Display QR Code for your Song</Button>
 
             {()=>{if(foundStatus == "false"){return "file is being searched by shazam"} else if(foundStatus=="notfound"){return "Your Youtube Ad revenue is safe :)"} else {return "Oh no, your audio will be flagged :("}}}
             

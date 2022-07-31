@@ -8,6 +8,7 @@ export default function OverviewRoot({tracksPassed = null}) {
 
       let params = useParams()
       let singleTrack = "false"
+      let requestedTrackID = ""
 
       if(params.trackid) {
             singleTrack = "true"

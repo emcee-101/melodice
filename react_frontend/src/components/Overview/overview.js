@@ -30,7 +30,7 @@ export default function Overview({tracksPassed = null, singleTrack = "false", re
         } else if (tracksPassed){ 
 
             //gets List of requested Tracks
-            tracksPassed.forEach(trackID => {
+            tracksPassed.forEach(async trackID => {
 
                 data.push(await standardFetch(IP + getfulldata_service + trackID, "GET"))
                 
@@ -49,7 +49,7 @@ export default function Overview({tracksPassed = null, singleTrack = "false", re
     } 
      
     // run only once when component mounted
-    useEffect(() => { fetchData(); }, []);
+    useEffect( () => {  fetchData(); }, []);
 
     if(currentData == {}){
         return ( <div className="overview">Loading...</div> )
