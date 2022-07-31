@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Button } from "react-bootstrap/lib/InputGroup"
 import { useParams } from "react-router-dom"
-import {audio_service, IP, ownPort, plannedIP} from "../../util/config"
+import {audio_service, IP, ownPort, plannedIP, rapid_api_shazam_host} from "../../util/config"
 import { standardFetch } from "../../util/fetch"
 import { mp3cutter} from "../../util/lib/simple-mp3-cutter-master"
  
@@ -11,15 +11,30 @@ export default function LandingPage(){
     let parameters = useParams()
     const [id,setID] = useState(parameters.trackid)
     let navigation = useNavigate();
+    const [foundStatus,setfoundStatus] = useState("false")
 
 
     const cache = useMemo(()=>{fetchFromAPIs(id)}, [id])
-    //useEffect(fetchFromAPIs(id), [])
+    useEffect(()=>{getAudioCut})
 
-    async function findWithShazam(){
-        //await standardFetch("http://194.94.204.27:10053/tools/qrcode?message="+myURL,"GET",{},{})
-        //shazam
+    async function findWithShazam(data){
 
+        let audioBuffer = Buffer.from(data, 'binary').toString('base64')
+
+        let payload = "data:audio/mp3;base64,"+audioBuffer
+        
+        let shazamResponse = await standardFetch("https://shazam-core.p.rapidapi.com/v1/tracks/recognize","POST",{ payload },{additionalParams: "rapidapi", rapid_api_host: rapid_api_shazam_host})
+        
+        if(!shazamResponse.detail){
+
+            if(shazamResponse[0] == null){
+                // file not found -> its safe
+                setfoundStatus("notfound")
+            } else {
+                setfoundStatus("found")
+            }
+
+        }
     }
 
     async function getAudioCut(){
@@ -32,6 +47,7 @@ export default function LandingPage(){
                 .then(res=>res.blob())
                 .then(blob=>{
 
+                    // cut audio with library for it to be short enough for the ShazamCore API
                     let cutter = new mp3cutter
                     cutter.cut(blob, 0, 3, findWithShazam);
 
@@ -40,7 +56,6 @@ export default function LandingPage(){
 
         }
 
-        await standardFetch("http://194.94.204.27:10053/tools/qrcode?message="+myURL,"GET",{},{})
     }
 
     function renderQR(){
@@ -76,6 +91,8 @@ export default function LandingPage(){
 
             {/* convert base64 qrcode data to a blob and get a link for that and refer the user to that link */}
             <Button onClick={()=>{url=renderQR(); navigation(url)}}>Display QR Code for your Song</Button>
+
+            {()=>{if(foundStatus == "false"){return "file is being searched by shazam"} else if(foundStatus=="notfound"){return "Your Youtube Ad revenue is safe :)"} else {return "Oh no, your audio will be flagged :("}}}
             
             </div>)
      else { return(
