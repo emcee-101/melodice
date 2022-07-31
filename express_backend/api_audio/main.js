@@ -1,6 +1,22 @@
 import {Song} from "../common_base/data_model.js";
 import { IP, LISTEN_PORT } from "./config.js";
-import mp3cutter from "mp3cutter"
+import MP3Cutter from  "mp3-cutter"
+import path from "path"
+import { fileURLToPath } from 'url'
+
+
+function getAudioPath(){
+    
+    const __filename = fileURLToPath(import.meta.url)
+    const __dirname = path.dirname(__filename)
+
+    const __audioDir = path.join(__dirname, 'audio_files');
+    console.log('Directory to save songs:'+__audioDir)
+
+    //  /usr/src/app/api_audio/audio_files
+
+    return __audioDir ;
+}
 
 
 export async function handleAudioRequests(req, res){
@@ -30,7 +46,9 @@ export async function handleAudioRequests(req, res){
         );}
     else {
 
-        const cutter = mp3cutter();
+        const filepath = getAudioPath() + "/"
+        
+
 
         Song.findById({_id: req.params.parameter})
         .lean()
@@ -45,13 +63,18 @@ export async function handleAudioRequests(req, res){
                 else {
                     res.status(200); 
 
+
+                    const srcFilePath = filepath + docs.audiofile
+                    const resultFileName = docs._id+".mp3"
+                    const resultFilePath = filepath + resultFileName
+
                         //docs.audiofile is filename of requested document
-                    cutter.cut({src: "./audio_files/" + docs.audiofile,
-                                target: "./audio_files/"+docs._id+".mp3",
+                    MP3Cutter.cut({src:  srcFilePath  ,
+                                target: resultFilePath ,
                                 start: 1,
                                 end: 4})
 
-                    res.send({audiourl: `http://${IP}:${LISTEN_PORT}/audio_files/` + docs.audiofile})
+                    res.send({audiourl: `http://${IP}:${LISTEN_PORT}/audio_files/` + resultFileName})
 
                 };
             }
